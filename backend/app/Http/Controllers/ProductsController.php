@@ -15,7 +15,7 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index()
     {
         return ProductsResource::collection(Product::all());
     }
@@ -23,7 +23,7 @@ class ProductsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductsStoreRequest $request): RedirectResponse
+    public function store(ProductsStoreRequest $request)
     {
         $created_product = Product::create($request->validated());
     }
@@ -31,7 +31,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(number $id): Response
+    public function show(number $id)
     {
         return new ProductsResource(Book::findOrFail($id));
     }
@@ -48,7 +48,7 @@ class ProductsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product): RedirectResponse
+    public function destroy(Product $product)
     {
         $product->delete();
         return 1;
