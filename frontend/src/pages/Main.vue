@@ -65,7 +65,7 @@
         </swiper-slide>
       </swiper-container>
     </section>
-    <section class="popular-items">
+    <section class="popular-items" v-if="!isLoading">
       <Card v-for="card in cards" :key="card.id" :card="card" />
     </section>
   </main>
@@ -73,42 +73,23 @@
 
 <script setup>
 import Card from "../components/Card.vue";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
+import ProductsService from "../services/ProductsService";
+const productService = new ProductsService;
 
-const cards = ref([
-  {
-    id: 1,
-    title: "Масло",
-    description: "Масло для автомобилей",
-    img: "./src/assets/img/Rectangle 9.png",
-    vin: 1010,
-    price: 5500,
-  },
-  {
-    id: 2,
-    title: "Масло",
-    description: "Масло для автомобилей",
-    img: "./src/assets/img/Rectangle 9.png",
-    vin: 1010,
-    price: 5500,
-  },
-  {
-    id: 3,
-    title: "Масло",
-    description: "Масло для автомобилей",
-    img: "./src/assets/img/Rectangle 9.png",
-    vin: 1010,
-    price: 5500,
-  },
-  {
-    id: 4,
-    title: "Масло",
-    description: "Масло для автомобилей",
-    img: "./src/assets/img/Rectangle 9.png",
-    vin: 1010,
-    price: 5500,
-  },
-]);
+const cards = ref([]);
+const isLoading = ref(true);
+
+async function getProducts() {
+  isLoading.value = true;
+  const res = await productService.getAll();
+  cards.value = res.data;
+  isLoading.value = false;
+}
+
+onMounted(async () => {
+  await getProducts();
+})
 </script>
 
 <style lang="scss">
