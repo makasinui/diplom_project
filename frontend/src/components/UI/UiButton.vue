@@ -7,7 +7,7 @@
 <script setup>
 defineProps({
   className: String,
-  bold: Boolean
+  bold: Boolean,
 });
 </script>
 
@@ -21,6 +21,7 @@ defineProps({
   color: white;
   align-items: center;
   padding: 0 25px;
+  cursor: pointer;
 
   &.bold {
     font-weight: bold;

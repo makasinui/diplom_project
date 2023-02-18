@@ -17,23 +17,8 @@
         </div>
       </div>
     </section>
-    <section class="search-wrapper content">
-      <div class="catalogs white">
-        <img
-          class="small-icon"
-          src="../assets/img/library_books.png"
-          width="25"
-          height="25"
-          alt="Каталоги"
-        />
-        <span class="catalogs__text">Каталоги</span>
-        <span class="catalogs__line">|</span>
-      </div>
-      <div class="search">
-        <input type="search" name="search" class="search__input" />
-        <ui-button bold class="search__button quest">Поиск</ui-button>
-        <ui-button bold class="search__button query">Запрос по VIN</ui-button>
-      </div>
+    <section class="content">
+      <Search />
     </section>
     <section class="slider content">
       <swiper-container
@@ -65,17 +50,61 @@
         </swiper-slide>
       </swiper-container>
     </section>
-    <section class="popular-items" v-if="!isLoading">
+    <section class="popular-items content" v-if="!isLoading">
       <Card v-for="card in cards" :key="card.id" :card="card" />
     </section>
+    <section class="map content">
+      <img class="map__img" src="../assets/img/Rectangle.png" alt="" />
+    </section>
+    <section class="description content">
+      <h2 class="description__text-title">
+        Качественные автозапчасти для иномарок в нашем интернет магазине
+      </h2>
+      <span class="description__text">
+        KhizAuto – лидер на Российском рынке, подтвердивший свою квалификацию и
+        профессионализм. <br />
+        Ежедневно к нам на сайт заходят тысячи посетителей, многие становятся
+        нашими постоянными клиентами. <br />
+        Сотрудники магазина вежливые, коммуникабельные, смогут подобрать
+        автозапчасти по артикулу, модели, серии или по году выпуска машины.
+        <br />
+        Каждый заказчик может рассчитывать на квалифицированную поддержку,
+        качественное обслуживание и умеренные цены! <br />
+      </span>
+      <h2 class="description__text-title">Доставка</h2>
+      <span class="description__text">
+        Доставка по всему Ростову-на-Дону бесплатна при заказе от 5000р. <br />
+        А также доставка по всей России за минимальное время к дверям вашего
+        дома. Контакты и номера телефонов <br />
+      </span>
+      <h2 class="description__text-title">Контакты</h2>
+      <span class="description__text">
+        Телефон: +7(938)-234-21-53 <br />
+        <img
+          class="small-icon"
+          src="../assets/img/Instagram.png"
+          alt="instagram"
+        />
+        <span class="description__text"> khizauto </span>
+        <br />
+        <img
+          class="small-icon"
+          src="../assets/img/VK com.png"
+          alt="instagram"
+        />
+        <span class="description__text"> khizauto </span>
+      </span>
+    </section>
   </main>
+  <Footer />
 </template>
 
 <script setup>
 import Card from "../components/Card.vue";
+import Search from "../components/Search.vue";
 import { ref, onMounted } from "vue";
 import ProductsService from "../services/ProductsService";
-const productService = new ProductsService;
+const productService = new ProductsService();
 
 const cards = ref([]);
 const isLoading = ref(true);
@@ -84,12 +113,13 @@ async function getProducts() {
   isLoading.value = true;
   const res = await productService.getAll();
   cards.value = res.data;
+  console.log(cards.value);
   isLoading.value = false;
 }
 
 onMounted(async () => {
   await getProducts();
-})
+});
 </script>
 
 <style lang="scss">
@@ -112,55 +142,6 @@ onMounted(async () => {
   }
 }
 
-.search-wrapper {
-  background: black;
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  margin: 0 auto;
-
-  .catalogs {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &__text {
-      margin-left: 20px;
-      font-weight: bold;
-    }
-
-    &__line {
-      margin-left: 20px;
-      margin-bottom: 3px;
-      font-size: 30px;
-    }
-  }
-
-  .search {
-    display: flex;
-    align-items: center;
-    flex: 0 1 80%;
-
-    &__input {
-      max-width: 850px;
-      width: 100%;
-      height: 35px;
-    }
-
-    &__button {
-      &.quest {
-        background: #f5911c;
-      }
-
-      &.query {
-        background: #d71515;
-      }
-    }
-  }
-}
-
 .slider {
   &__img {
     object-fit: contain;
@@ -172,5 +153,24 @@ onMounted(async () => {
 .popular-items {
   display: flex;
   justify-content: space-between;
+}
+
+.map {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &__img {
+    width: 100%;
+  }
+}
+
+.description {
+  &__text-title {
+    padding: 10px 0;
+  }
+
+  &__text {
+  }
 }
 </style>
