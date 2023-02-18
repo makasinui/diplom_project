@@ -1,5 +1,5 @@
 <template>
-  <div class="card" v-if="card?.length">
+  <div class="card">
     <div class="card-img">
       <img class="primary-img" :src="img" alt="" />
     </div>
@@ -22,8 +22,7 @@
 <script setup>
 import { toRefs } from "vue";
 const props = defineProps({ card: Object });
-const { title, description, price, vin, img } = toRefs(props.card[0]);
-console.log(props.card);
+const { title, description, price, vin, img } = toRefs(props.card);
 </script>
 
 <style lang="scss">
