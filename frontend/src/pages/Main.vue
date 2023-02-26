@@ -1,6 +1,5 @@
 <template>
-  <Header />
-  <main class="main container">
+  <Layout page="main">
     <section class="logo-wrapper content">
       <div class="logo">
         <img src="../assets/img/Group 4.png" alt="" />
@@ -56,47 +55,7 @@
     <section class="map content">
       <img class="map__img" src="../assets/img/Rectangle.png" alt="" />
     </section>
-    <section class="description content">
-      <h2 class="description__text-title">
-        Качественные автозапчасти для иномарок в нашем интернет магазине
-      </h2>
-      <span class="description__text">
-        KhizAuto – лидер на Российском рынке, подтвердивший свою квалификацию и
-        профессионализм. <br />
-        Ежедневно к нам на сайт заходят тысячи посетителей, многие становятся
-        нашими постоянными клиентами. <br />
-        Сотрудники магазина вежливые, коммуникабельные, смогут подобрать
-        автозапчасти по артикулу, модели, серии или по году выпуска машины.
-        <br />
-        Каждый заказчик может рассчитывать на квалифицированную поддержку,
-        качественное обслуживание и умеренные цены! <br />
-      </span>
-      <h2 class="description__text-title">Доставка</h2>
-      <span class="description__text">
-        Доставка по всему Ростову-на-Дону бесплатна при заказе от 5000р. <br />
-        А также доставка по всей России за минимальное время к дверям вашего
-        дома. Контакты и номера телефонов <br />
-      </span>
-      <h2 class="description__text-title">Контакты</h2>
-      <span class="description__text">
-        Телефон: +7(938)-234-21-53 <br />
-        <img
-          class="small-icon"
-          src="../assets/img/Instagram.png"
-          alt="instagram"
-        />
-        <span class="description__text"> khizauto </span>
-        <br />
-        <img
-          class="small-icon"
-          src="../assets/img/VK com.png"
-          alt="instagram"
-        />
-        <span class="description__text"> khizauto </span>
-      </span>
-    </section>
-  </main>
-  <Footer />
+  </Layout>
 </template>
 
 <script setup>
@@ -111,9 +70,8 @@ const isLoading = ref(true);
 
 async function getProducts() {
   isLoading.value = true;
-  const res = await productService.getAll();
+  const res = await productService.getPopular();
   cards.value = res.data;
-  console.log(cards.value);
   isLoading.value = false;
 }
 
@@ -162,15 +120,6 @@ onMounted(async () => {
   align-items: center;
   &__img {
     width: 100%;
-  }
-}
-
-.description {
-  &__text-title {
-    padding: 10px 0;
-  }
-
-  &__text {
   }
 }
 </style>

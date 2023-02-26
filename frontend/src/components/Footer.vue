@@ -27,11 +27,11 @@
 
 <style lang="scss">
 .footer {
-  margin-top: 180px;
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
   padding: 20px;
+  margin-top: 20px;
   background: rgba(0, 0, 0, 0.7);
 
   &-section {
