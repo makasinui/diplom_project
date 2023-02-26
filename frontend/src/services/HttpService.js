@@ -6,14 +6,14 @@ export default class HttpService {
     }
     
     post(url, data) {
-        return axios.post(url, data)
+        return axios.post(url, data);
     }
 
     update(url, data) {
-        return axios.put(url, data)
+        return axios.put(url, data);
     }
 
     delete(url) {
-        return axios.delete(url)
+        return axios.delete(url);
     }
 }
