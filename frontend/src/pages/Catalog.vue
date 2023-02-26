@@ -1,14 +1,12 @@
 <template>
-  <Header />
-  <main class="catalog-wrapper container">
+  <Layout page="catalog">
     <section class="content">
       <Search />
     </section>
     <section class="cards-wrapper content">
       <Card />
     </section>
-  </main>
-  <Footer />
+  </Layout>
 </template>
 
 <script setup>
