@@ -3,19 +3,19 @@ import { register } from 'swiper/element/bundle'
 import './style.scss'
 import router from './router'
 import App from './App.vue'
-import Header from './components/Header.vue'
-import Footer from './components/Footer.vue'
+import Layout from './components/Layout.vue'
 import UIComponents from './components/UI'
+import store from './store'
 
+/* регистрируем компоненты слайдера */
 register();
 const app = createApp(App)
-app.use(router);
+app.use(router).use(store);
 /* define global components */
-app.component('Header', Header);
-app.component('Footer', Footer)
+app.component('Layout', Layout);
 
 UIComponents.forEach(component => {
-    /* private property .__name */
+    /* приватное поле property.__name */
     app.component(component.__name, component)
 });
 
