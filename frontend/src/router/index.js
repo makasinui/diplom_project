@@ -7,6 +7,7 @@ import AboutUs from '../pages/AboutUs.vue';
 import MainAdmin from '../pages/admin/MainAdmin.vue';
 import Clients from '../pages/Clients.vue';
 import Contacts from '../pages/Contacts.vue';
+import Login from "../pages/Login.vue";
 
 const routes = [
   { path: "/", component: Main },
@@ -14,7 +15,8 @@ const routes = [
   { path: "/about-us", component: AboutUs },
   { path: "/clients", component: Clients },
   { path: "/contacts", component: Contacts },
-  { path: "/admin", component: MainAdmin }
+  { path: "/admin", component: MainAdmin },
+  { path: "/login", component: Login }
 ];
 
 const router = createRouter({
