@@ -1,7 +1,7 @@
 import HttpService from "./HttpService"
 
 export default class ProductsService {
-  url = "http://localhost:8000/api/products";
+  url = "/backend/api/products";
   httpService = new HttpService();
 
   getAll() {

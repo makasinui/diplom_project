@@ -1,8 +1,14 @@
 <template>
     <Layout page="login">
         <section class="login content">
-            <h1>Авторизация</h1>
-            <form @submit.prevent="login">
+            <h1>Регистрация</h1>
+            <form @submit.prevent="register">
+                <ui-input
+                    v-model="name"
+                    type="string"
+                    required
+                    label="Имя"
+                />
                 <ui-input
                     v-model="email"
                     type="email"
@@ -15,25 +21,45 @@
                     required
                     label="Пароль"
                 />
+                <ui-input
+                    v-model="passwordConfirmation"
+                    type="password"
+                    required
+                    :rules="{email: true}"
+                    @error="errorMessage($event)"
+                    label="Подтверждение пароля"
+                />
                 <ui-button bold className="button-send">Отправить</ui-button>
             </form>
         </section>
+        <ui-toastr v-if="showToast" :text="text" />
     </Layout>
 </template>
 
 <script setup>
-import { ref } from "vue";
-import AuthService from '@/services/AuthService'
+import { onMounted, ref } from "vue";
+import AuthService from "@/services/AuthService";
 const email = ref("");
+const name = ref("");
 const password = ref("");
+const showToast = ref(false);
+const text = ref('');
+const passwordConfirmation = ref("");
 const authService = new AuthService();
 
-async function login() {
+const errorMessage = (error) => {
+    text.value = error;
+    showToast.value = true;
+    setTimeout(()=>{showToast.value = false}, 5000);
+}
+
+async function register() {
     await authService.login({
-        email: email.value, 
-        password: password.value
+        email: email.value,
+        password: password.value,
     });
 }
+
 </script>
 
 <style lang="scss">
