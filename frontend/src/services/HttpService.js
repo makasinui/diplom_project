@@ -1,19 +1,20 @@
-import axios from 'axios'
+import axios from "axios";
 
 export default class HttpService {
+    service = axios.create({ withCredentials: true });
     get(url) {
-        return axios.get(url);
+        return this.service.get(url);
     }
-    
+
     post(url, data) {
-        return axios.post(url, data);
+        return this.service.post(url, data);
     }
 
     update(url, data) {
-        return axios.put(url, data);
+        return this.service.put(url, data);
     }
 
     delete(url) {
-        return axios.delete(url);
+        return this.service.delete(url);
     }
 }

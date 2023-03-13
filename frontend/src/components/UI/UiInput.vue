@@ -3,15 +3,20 @@
         <label class="ui-label" v-if="label">{{ label }}</label>
         <div class="ui-required" v-if="required">*</div>
         <input
-            @change="emit('update:modelValue', $event.target.value)"
+            @change="onChange($event.target.value)"
             class="ui-input"
             :type="type"
+            :max="max"
+            :min="min"
         />
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
+const max = ref();
+const min = ref();
+const requiredAlias = ref();
 
 const props = defineProps({
     type: {
@@ -21,8 +26,44 @@ const props = defineProps({
     label: String,
     required: Boolean,
     value: String,
+    rules: Object,
 });
-const emit = defineEmits("update:modelValue");
+const emit = defineEmits(["update:modelValue", "error"]);
+
+function onChange(val) {
+    if (val.length > max) {
+        emit("error", "Превышено максимально допустимое кол-во символов!");
+        return;
+    }
+
+    if (val.length < min) {
+        emit("error", `Минимальное кол-во символов: ${min.value}`);
+        return;
+    }
+
+    if (requiredAlias.value && val.indexOf("@") === -1) {
+        emit("error", "Неправильно указан email");
+        return;
+    }
+
+    emit("update:modelValue", val);
+}
+
+function customValidation() {
+    if (props.rules?.max) {
+        max.value = rules.max;
+    }
+
+    if (props.rules?.min) {
+        min.value = rules.min;
+    }
+
+    if (props.rules?.email) {
+        requiredAlias.value = true;
+    }
+}
+
+onMounted(customValidation)
 </script>
 
 <style lang="scss" scoped>
