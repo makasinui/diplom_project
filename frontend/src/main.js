@@ -6,11 +6,13 @@ import App from './App.vue'
 import Layout from './components/Layout.vue'
 import UIComponents from './components/UI'
 import store from './store'
+import ToastPlugin from 'vue-toast-notification'
+import 'vue-toast-notification/dist/theme-bootstrap.css';
 
 /* регистрируем компоненты слайдера */
 register();
 const app = createApp(App)
-app.use(router).use(store);
+app.use(router).use(store).use(ToastPlugin);
 /* define global components */
 app.component('Layout', Layout);
 

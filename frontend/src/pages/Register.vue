@@ -2,61 +2,68 @@
     <Layout page="login">
         <section class="login content">
             <h1>Регистрация</h1>
-            <form @submit.prevent="register">
+            <form novalidate @submit.prevent="register">
                 <ui-input
                     v-model="name"
-                    type="string"
+                    type="text"
                     required
+                    :rules="{max: 8}"
+                    @error="errorMessage($event)"
                     label="Имя"
                 />
                 <ui-input
                     v-model="email"
                     type="email"
                     required
+                    :rules="{email: true}"
+                    @error="errorMessage($event)"
                     label="E-mail"
                 />
                 <ui-input
                     v-model="password"
                     type="password"
                     required
+                    :rules="{min: 8}"
+                    @error="errorMessage($event)"
                     label="Пароль"
                 />
                 <ui-input
                     v-model="passwordConfirmation"
                     type="password"
                     required
-                    :rules="{email: true}"
+                    :rules="{min: 8}"
                     @error="errorMessage($event)"
                     label="Подтверждение пароля"
                 />
                 <ui-button bold className="button-send">Отправить</ui-button>
             </form>
         </section>
-        <ui-toastr v-if="showToast" :text="text" />
     </Layout>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 import AuthService from "@/services/AuthService";
+import { useToast } from "vue-toast-notification"
 const email = ref("");
 const name = ref("");
 const password = ref("");
-const showToast = ref(false);
-const text = ref('');
 const passwordConfirmation = ref("");
-const authService = new AuthService();
 
-const errorMessage = (error) => {
-    text.value = error;
-    showToast.value = true;
-    setTimeout(()=>{showToast.value = false}, 5000);
+const authService = new AuthService();
+const toast = useToast();
+const error = ref()
+
+const errorMessage = (err) => {
+    error.value = err;
 }
 
 async function register() {
-    await authService.login({
+    await authService.register({
         email: email.value,
         password: password.value,
+        password_confirmation: passwordConfirmation.value,
+        name: name.value
     });
 }
 

@@ -24,7 +24,7 @@
         <ul class="authorizathion">
             <li><router-link to="">Корзина</router-link></li>
             <li><router-link to="/login">Авторизация</router-link></li>
-            <li>Регистрация</li>
+            <li><router-link to="/register">Регистрация</router-link></li>
         </ul>
     </header>
 </template>

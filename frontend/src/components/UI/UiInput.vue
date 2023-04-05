@@ -6,9 +6,10 @@
             @change="onChange($event.target.value)"
             class="ui-input"
             :type="type"
-            :max="max"
-            :min="min"
+            :maxlength="max"
+            :minlength="min"
         />
+        <span class="ui-error">{{ errorMessage }}</span>
     </div>
 </template>
 
@@ -17,6 +18,7 @@ import { onMounted, ref } from "vue";
 const max = ref();
 const min = ref();
 const requiredAlias = ref();
+const errorMessage = ref();
 
 const props = defineProps({
     type: {
@@ -28,21 +30,21 @@ const props = defineProps({
     value: String,
     rules: Object,
 });
-const emit = defineEmits(["update:modelValue", "error"]);
+const emit = defineEmits("update:modelValue");
 
 function onChange(val) {
-    if (val.length > max) {
-        emit("error", "Превышено максимально допустимое кол-во символов!");
+    if (val.length > max.value) {
+        errorMessage.value = "Превышено максимально допустимое кол-во символов!";
         return;
     }
 
-    if (val.length < min) {
-        emit("error", `Минимальное кол-во символов: ${min.value}`);
+    if (val.length < min.value) {
+        errorMessage.value = `Минимальное кол-во символов: ${min.value}`;
         return;
     }
 
     if (requiredAlias.value && val.indexOf("@") === -1) {
-        emit("error", "Неправильно указан email");
+        errorMessage.value = "Неправильно указан email";
         return;
     }
 
@@ -51,11 +53,11 @@ function onChange(val) {
 
 function customValidation() {
     if (props.rules?.max) {
-        max.value = rules.max;
+        max.value = props.rules.max;
     }
 
     if (props.rules?.min) {
-        min.value = rules.min;
+        min.value = props.rules.min;
     }
 
     if (props.rules?.email) {
@@ -75,6 +77,10 @@ onMounted(customValidation)
         flex-direction: column;
     }
     &-label {
+    }
+    &-error {
+        color: red;
+        font-size: 10px;
     }
     &-input {
         max-width: 300px;
