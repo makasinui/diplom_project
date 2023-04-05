@@ -4,6 +4,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GetController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\MainController;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -14,19 +17,11 @@ use App\Http\Controllers\ProductsController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
-Route::post('/tokens/create', function (Request $request) {
-    $token = $request->user()->createToken($request->token_name);
-
-    return ['token' => $token->plainTextToken];
-});
+Route::post('/auth/register', [AuthController::class, 'createUser']);
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::get('/get', [GetController::class]);
+    Route::get('/user', [AuthController::class, 'getUser']);
 });
 
 Route::resources([
