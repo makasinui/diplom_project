@@ -1,10 +1,11 @@
 <template>
-  <button :class="['button', className, bold ? 'bold' : '']">
+  <button @click="emit('click')" :class="['button', className, bold ? 'bold' : '']">
     <slot></slot>
   </button>
 </template>
 
 <script setup>
+const emit = defineEmits(['click'])
 defineProps({
   className: String,
   bold: Boolean,

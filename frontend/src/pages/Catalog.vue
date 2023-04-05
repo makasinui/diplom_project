@@ -1,29 +1,36 @@
 <template>
-  <Layout page="catalog">
-    <section class="content">
-      <Search />
-    </section>
-    <section class="cards-wrapper content">
-      <Card v-for="card in cards" :key="card.id" :card="card" />
-    </section>
-  </Layout>
+    <Layout page="catalog">
+        <section class="content">
+            <Search />
+        </section>
+        <section class="cards-wrapper content">
+            <Card v-for="item in products" :card="item" />
+            {{ products }}
+        </section>
+    </Layout>
 </template>
 
 <script setup>
 import Search from "../components/Search.vue";
 import Card from "../components/Card.vue";
-import { ref, onMounted } from "vue";
+import router from "../router/index.js";
 import ProductsService from "../services/ProductsService";
-const productService = new ProductsService();
+import { onMounted, ref } from "vue";
 
-const cards = ref([]);
-const isLoading = ref(true);
+const products = ref();
 
 async function getProducts() {
-    isLoading.value = true;
-    const res = await productService.getPopular();
-    cards.value = res.data;
-    isLoading.value = false;
+  const productsService = new ProductsService();
+  const searchString = router.currentRoute.value.params.searchString.split('&');
+  if(searchString[0] !== '' && searchString[0] !== 'undefined') {
+    const search = searchString[1] 
+      ? `vin=${searchString[0]}` 
+      : `search=${searchString[0]}`;
+  
+      products.value = await productsService.searchProducts(search)
+    return;
+  }
+  products.value = await productsService.getAll()
 }
 
 onMounted(getProducts)
@@ -31,9 +38,5 @@ onMounted(getProducts)
 
 <style lang="scss">
 .catalog-wrapper {
-  .cards-wrapper {
-    display: flex;
-    justify-content: space-between;
-  }
 }
 </style>
