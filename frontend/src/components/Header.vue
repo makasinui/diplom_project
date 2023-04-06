@@ -28,9 +28,15 @@
                 <li><router-link to="/register">Регистрация</router-link></li>
             </div>
             <div class="authentificated" v-if="user?.name">
-                <li v-if="user">
+                <li>
                     <a href="#" @click.prevent>Выйти</a>
                 </li>
+                <li>
+                    <router-link to="/admin">
+                        Админ панель
+                    </router-link>
+                </li>
+                
             </div>
         </ul>
     </header>
@@ -58,7 +64,10 @@ onMounted(() => {
 
     .authentificated {
         display: flex;
-
+        width: 100%;
+        li {
+            margin-left: 20px;
+        }
         &-no {
             display: flex;
         }
