@@ -22,12 +22,30 @@
             </li>
         </ul>
         <ul class="authorizathion">
-            <li><router-link to="">Корзина</router-link></li>
-            <li><router-link to="/login">Авторизация</router-link></li>
-            <li><router-link to="/register">Регистрация</router-link></li>
+            <li><router-link to="/cart">Корзина</router-link></li>
+            <div class="authentificated-no" v-if="!user?.name">
+                <li><router-link to="/login">Авторизация</router-link></li>
+                <li><router-link to="/register">Регистрация</router-link></li>
+            </div>
+            <div class="authentificated" v-if="user?.name">
+                <li v-if="user">
+                    <a href="#" @click.prevent>Выйти</a>
+                </li>
+            </div>
         </ul>
     </header>
 </template>
+<script setup>
+import store from '../store';
+import { ref, onMounted } from 'vue';
+const user = ref(store.getters.user);
+onMounted(() => {
+  window.addEventListener('user', () => {
+    user.value = JSON.parse(localStorage.getItem('user'))
+    console.log(user.value)
+  })
+})
+</script>
 <style lang="scss">
 .header {
     display: flex;
@@ -37,6 +55,14 @@
     background: rgba(0, 0, 0, 0.7);
     height: 50px;
     color: white;
+
+    .authentificated {
+        display: flex;
+
+        &-no {
+            display: flex;
+        }
+    }
 
     .city {
         display: flex;

@@ -1,7 +1,8 @@
 import axios from "axios";
+import { AxiosService } from "./AxiosService";
 
 export default class HttpService {
-    service = axios.create({ withCredentials: true });
+    service = AxiosService();
     get(url) {
         return this.service.get(url);
     }

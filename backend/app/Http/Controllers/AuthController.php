@@ -22,7 +22,7 @@ class AuthController extends Controller
             //Validated
             $validateUser = Validator::make($request->all(), 
             [
-                'name' => 'max:50',
+                'name' => 'required|max:50',
                 'email' => 'required|email|unique:users,email',
                 'password' => 'required'
             ]);
