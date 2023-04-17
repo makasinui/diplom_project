@@ -1,9 +1,7 @@
 <template>
-  <Header />
   <main :class="className">
     <slot></slot>
   </main>
-  <Footer />
 </template>
 
 <script setup>
