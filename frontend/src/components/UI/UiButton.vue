@@ -27,5 +27,10 @@ defineProps({
   &.bold {
     font-weight: bold;
   }
+
+  @media (max-width: 768px) {
+    font-size: 14px;
+    padding: 0 10px;
+  }
 }
 </style>

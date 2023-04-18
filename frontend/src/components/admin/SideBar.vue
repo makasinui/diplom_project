@@ -11,7 +11,7 @@
 <style lang="scss">
 .sidebar {
     font-size: 26px;
-    flex: 0 0 300px;
+    flex: 0 1 300px;
     min-height: 100%;
     background: rgba(0, 0, 0, 0.7);
     color: white;

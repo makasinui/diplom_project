@@ -68,12 +68,18 @@ function search(vin = false) {
             margin-bottom: 3px;
             font-size: 30px;
         }
+
+        @media (max-width: 425px) {
+            justify-content: flex-start;
+            margin-left: 10px;
+        }
     }
 
     .search {
         display: flex;
         align-items: center;
         flex: 0 1 80%;
+        gap: 5px;
 
         &__input {
             max-width: 850px;
@@ -90,6 +96,22 @@ function search(vin = false) {
                 background: #d71515;
             }
         }
+
+        @media (max-width: 425px) {
+            margin: 0 10px;
+            flex: 0 1 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        padding: 0 10px;
+        width: auto;
+    }
+
+    @media (max-width: 425px) {
+        flex-direction: column;
+        height: 90px;
+        align-items: unset;
     }
 }
 </style>

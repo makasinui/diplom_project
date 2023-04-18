@@ -5,8 +5,6 @@
 </template>
 
 <script setup>
-import Header from "./Header.vue";
-import Footer from "./Footer.vue";
 const props = defineProps({
   page: {
     type: String,

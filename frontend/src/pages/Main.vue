@@ -24,34 +24,7 @@
             <Search />
         </section>
         <section class="slider content">
-            <swiper-container
-                speed="500"
-                loop="true"
-                slides-per-view="1"
-                navigation="true"
-            >
-                <swiper-slide>
-                    <img
-                        class="slider__img"
-                        src="../assets/img/mercedes-benz-e63-amg-s-sonic-286.jpg"
-                        alt=""
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <img
-                        class="slider__img"
-                        src="../assets/img/bmw-5-series-sedan-m-technical-data-sp-xxl.jpg"
-                        alt=""
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <img
-                        class="slider__img"
-                        src="../assets/img/A1911979_large_1920x600.webp"
-                        alt=""
-                    />
-                </swiper-slide>
-            </swiper-container>
+            <main-slider />
         </section>
         <section class="popular-items content" v-if="!isLoading">
             <Card v-for="card in cards" :key="card.id" :card="card" />
@@ -65,6 +38,7 @@
 <script setup>
 import Card from "../components/Card.vue";
 import Search from "../components/Search.vue";
+import MainSlider from "../components/MainSlider.vue";
 import { ref, onMounted } from "vue";
 import ProductsService from "../services/ProductsService";
 const productService = new ProductsService();
@@ -104,17 +78,10 @@ onMounted(async () => {
     }
 }
 
-.slider {
-    &__img {
-        object-fit: contain;
-        width: 100%;
-        height: 500px;
-    }
-}
-
 .popular-items {
     display: flex;
     justify-content: space-between;
+    gap: 8px;
 }
 
 .map {

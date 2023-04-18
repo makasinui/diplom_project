@@ -5,7 +5,6 @@
         </section>
         <section class="cards-wrapper content">
             <Card v-for="item in products" :card="item" />
-            {{ products }}
         </section>
     </Layout>
 </template>
@@ -38,5 +37,18 @@ onMounted(getProducts)
 
 <style lang="scss">
 .catalog-wrapper {
+
+  .cards-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }
 </style>

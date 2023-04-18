@@ -7,7 +7,7 @@
         </thead>
         <tbody>
             <tr v-for="row in rows">
-                <td v-for="item in row">{{ item }}</td>
+                <td v-for="item in row"><div style="height: 20px; overflow: hidden">{{ item }}</div></td>
             </tr>
         </tbody>
     </table>
