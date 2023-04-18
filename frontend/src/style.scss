@@ -32,6 +32,11 @@ input[type="text"]::-ms-clear {
   width: 0;
   height: 0;
 }
+
+.ml {
+  margin-left: 1rem;
+}
+
 input[type="text"]::-ms-reveal {
   display: none;
   width: 0;

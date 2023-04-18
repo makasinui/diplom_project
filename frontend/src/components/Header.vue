@@ -25,7 +25,7 @@
             <li><router-link to="/cart">Корзина</router-link></li>
             <div class="authentificated-no" v-if="!user?.name">
                 <li><router-link to="/login">Авторизация</router-link></li>
-                <li><router-link to="/register">Регистрация</router-link></li>
+                <li class="ml"><router-link to="/register">Регистрация</router-link></li>
             </div>
             <div class="authentificated" v-if="user?.name">
                 <li>

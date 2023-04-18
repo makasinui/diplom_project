@@ -1,15 +1,17 @@
 <template>
     <section class="search-wrapper content">
         <div class="catalogs white">
-            <img
-                class="small-icon"
-                src="../assets/img/library_books.png"
-                width="25"
-                height="25"
-                alt="Каталоги"
-            />
-            <span class="catalogs__text">Каталоги</span>
-            <span class="catalogs__line">|</span>
+            <router-link to="/catalog" class="catalogs">
+                <img
+                    class="small-icon"
+                    src="../assets/img/library_books.png"
+                    width="25"
+                    height="25"
+                    alt="Каталоги"
+                />
+                <span class="catalogs__text">Каталоги</span>
+                <span class="catalogs__line">|</span>
+            </router-link>
         </div>
         <div class="search">
             <input
