@@ -13,7 +13,7 @@
       </div>
       <span class="card-content__vin"> vin: {{ vin }} </span>
       <div class="card__button">
-        <ui-button className="button">Купить</ui-button>
+        <ui-button className="button" @click="addToCart">Купить</ui-button>
       </div>
     </div>
   </div>
@@ -24,6 +24,17 @@ import { toRefs } from "vue";
 const props = defineProps({ card: Object });
 const { title, description, price, vin, img } = toRefs(props.card);
 const image = new URL('../assets/img/Rectangle 9.png', import.meta.url).href;
+
+const addToCart = () => {
+  if(localStorage.getItem('cart')) {
+    const card = JSON.parse(localStorage.getItem('cart'));
+    card.push(props.card);
+    localStorage.setItem('cart', JSON.stringify(card));
+    return;
+  }
+
+  localStorage.setItem('cart', JSON.stringify([props.card]));
+}
 </script>
 
 <style lang="scss">
