@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-img">
-      <img class="primary-img" :src="img" alt="" />
+      <img class="primary-img" :src="image" alt="" />
     </div>
     <div class="card-content">
       <span class="card-content__title">
@@ -23,6 +23,7 @@
 import { toRefs } from "vue";
 const props = defineProps({ card: Object });
 const { title, description, price, vin, img } = toRefs(props.card);
+const image = new URL('../assets/img/Rectangle 9.png', import.meta.url).href;
 </script>
 
 <style lang="scss">
