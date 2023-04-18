@@ -50,9 +50,9 @@ async function login() {
         }
     }
     form {
-        border: 1px solid gray;
-        padding: 100px 150px;
-
+        max-width: 500px;
+        max-height: 500px;
+        height: 100%;
         .button-send {
             background: green;
             margin: 0 auto;

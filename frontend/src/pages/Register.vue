@@ -1,5 +1,5 @@
 <template>
-    <Layout page="login">
+    <Layout page="register">
         <section class="login content">
             <h1>Регистрация</h1>
             <form novalidate @submit.prevent="register">
@@ -70,7 +70,7 @@ async function register() {
 </script>
 
 <style lang="scss">
-.login-wrapper {
+.register-wrapper {
     width: 100%;
     .login {
         display: flex;
@@ -83,8 +83,9 @@ async function register() {
         }
     }
     form {
-        border: 1px solid gray;
-        padding: 100px 150px;
+        max-width: 500px;
+        max-height: 500px;
+        height: 100%;
 
         .button-send {
             background: green;
