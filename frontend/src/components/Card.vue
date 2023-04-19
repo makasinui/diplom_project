@@ -28,6 +28,9 @@ const image = new URL('../assets/img/Rectangle 9.png', import.meta.url).href;
 const addToCart = () => {
   if(localStorage.getItem('cart')) {
     const card = JSON.parse(localStorage.getItem('cart'));
+    if(card.some(item => item.id === props.card.id)) {
+      return;
+    }
     card.push(props.card);
     localStorage.setItem('cart', JSON.stringify(card));
     return;
