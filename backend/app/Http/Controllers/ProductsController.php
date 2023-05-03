@@ -15,8 +15,17 @@ class ProductsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $query = $request->all();
+        if(array_key_exists('search', $query)) {;
+            $search_string = $query['search'];
+            return ProductsResource::collection(Product::where('title', 'like', '%' . $search_string . "%")->get());
+        }
+        if(array_key_exists('vin', $query)) {
+            $search_string = $query['vin'];
+            return ProductsResource::collection(Product::where('vin', '=', $search_string)->get());
+        }
         return ProductsResource::collection(Product::all());
     }
 

@@ -4,7 +4,10 @@
             <Search />
         </section>
         <section class="cards-wrapper content">
-            <Card v-for="item in products" :card="item" />
+            <Card v-for="item in products" :card="item" v-if="products?.length"/>
+            <h2 v-else>
+              Ничего не найдено
+            </h2>
         </section>
     </Layout>
 </template>
