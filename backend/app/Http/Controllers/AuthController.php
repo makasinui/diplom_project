@@ -101,6 +101,10 @@ class AuthController extends Controller
     }
 
     public function getUser() {
-        return Auth::user();
+        if(Auth::check()) {
+            return Auth::user();
+        } else {
+            return response('', 204);
+        }
     }
 }
