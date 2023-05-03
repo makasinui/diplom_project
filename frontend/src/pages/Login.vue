@@ -24,6 +24,7 @@
 <script setup>
 import { ref } from "vue";
 import AuthService from '@/services/AuthService'
+import router from "../router";
 const email = ref("");
 const password = ref("");
 const authService = new AuthService();
@@ -33,6 +34,7 @@ async function login() {
         email: email.value, 
         password: password.value
     });
+    router.push('/')
 }
 </script>
 

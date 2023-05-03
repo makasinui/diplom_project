@@ -10,6 +10,7 @@ import Contacts from "@/pages/Contacts.vue";
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
 import Cart from '@/pages/Cart.vue'
+import ErrorPage from '@/pages/ErrorPage.vue'
 
 const routes = [
     { path: "/", component: Main },
@@ -21,6 +22,8 @@ const routes = [
     { path: "/cart", component: Cart },
     { path: "/login", component: Login },
     { path: "/register", component: Register },
+    { path: "/404", component: ErrorPage },
+    { path: '/:pathMatch(.*)*', component: ErrorPage },
 ];
 
 const router = createRouter({
@@ -31,8 +34,10 @@ const router = createRouter({
 router.beforeEach(async (to, from, next) => {
     if (to?.meta?.forAdmin) {
         const user = store.getters.user;
-        if (user.name) {
+        if (user.admin) {
             next();
+        } else {
+            router.push('/404')
         }
     }
     next();

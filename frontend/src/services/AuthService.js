@@ -51,6 +51,7 @@ export default class AuthService {
 
     async logout() {
         this.removeToken();
-        this.httpService.post(`${this.url}/logout`)
+        this.toast.success('Успешно', { duration: 5000 });
+        this.userService.getUser();
     }
 }

@@ -29,9 +29,9 @@
             </div>
             <div class="authentificated" v-if="user?.name">
                 <li>
-                    <a href="#" @click.prevent>Выйти</a>
+                    <a href="#" @click.prevent="logout">Выйти</a>
                 </li>
-                <li>
+                <li v-if="user?.admin">
                     <router-link to="/admin"> Админ панель </router-link>
                 </li>
             </div>
@@ -78,9 +78,9 @@
             
             
                 <li class="menu__item" v-if="user?.name">
-                    <a href="#" @click.prevent>Выйти</a>
+                    <a href="#" @click="logout">Выйти</a>
                 </li>
-                <li class="menu__item" v-if="user?.name">
+                <li class="menu__item" v-if="user?.admin">
                     <router-link to="/admin"> Админ панель </router-link>
                 </li>
             
@@ -90,8 +90,11 @@
 <script setup>
 import store from "../store";
 import { ref, onMounted, watch } from "vue";
+import AuthService from "../services/AuthService";
 const user = ref(store.getters.user);
 const openMobileMenu = ref(false);
+const authService = new AuthService();
+const logout = () => authService.logout();
 onMounted(() => {
     window.addEventListener("user", () => {
         user.value = JSON.parse(localStorage.getItem("user"));

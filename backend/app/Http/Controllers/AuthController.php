@@ -100,7 +100,8 @@ class AuthController extends Controller
         }
     }
 
-    public function getUser() {
+    public function getUser() 
+    {
         if(auth('sanctum')->check()) {
             return auth('sanctum')->user();
         } else {
