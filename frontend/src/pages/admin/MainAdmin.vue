@@ -1,65 +1,45 @@
 <template>
     <Layout page="admin">
-        <Table :columns="cols" :rows="products">
-            <template #img="{ value }">
-                <img class="image-short" :src="value"/>
-            </template>
-            <template #actions>
-                <!-- todo: return id in slot -->
-                <ActionsCell @edit="editItem" @delete="deleteItem" />
-            </template>
-        </Table>
+        <div class="main-content">
+            <SideBar @changeTab="(ev) => tab = ev" />
+            <component :is="component" />
+        </div>
+        <div class="wrapper">
+            <ui-pagination :total="2" :current="2" />
+        </div>
     </Layout>
 </template>
 
 <script setup>
 import Layout from '@/components/admin/Layout.vue'
-import Table from '@/components/admin/Table.vue';
-import AdminService from '@/services/AdminService.js';
-import ActionsCell from '../../components/admin/table-layout/ActionsCell.vue';
-import { onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
+import SideBar from "@/components/admin/SideBar.vue";
+import Products from './tabs/Products.vue';
+import Users from './tabs/Users.vue';
 
-const adminService = new AdminService();
-const products = ref([]);
-onMounted(async () => {
-    products.value = await adminService.getAllProducts();
+const tab = ref('Products');
+
+const component = computed(() => {
+    if(tab.value === 'Products') 
+        return Products;
+    return Users;
 })
-
-const cols = [
-    { 
-        field: 'id',
-        title: 'ID',
-    },
-    {
-        field: 'title',
-        title: 'Наименование'
-    },
-    {
-        field: 'vin',
-        title: 'VIN'
-    },
-    /* {
-        field: 'popular',
-        title: 'Популярность'
-    }, */
-    {
-        field: 'img',
-        title: 'Изображение'
-    },
-    {
-        field: 'actions',
-        title: 'Действия'
-    }
-];
-
-const editItem = () => console.log('edit')
-const deleteItem = () => console.log('delete')
 </script>
 
 <style lang="scss">
 .admin-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    .main-content {
+        height: 100%;
+        display: flex;
+    }
     .image-short {
         max-width: 70px;
+    }
+    .custom-pagination {
+        margin-left: 300px;
     }
 }
 </style>

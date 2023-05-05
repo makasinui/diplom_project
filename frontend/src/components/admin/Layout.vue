@@ -1,12 +1,10 @@
 <template>
     <main :class="[className, 'admin-main content']">
-        <SideBar />
         <slot></slot>
     </main>
 </template>
 
 <script setup>
-import SideBar from "./SideBar.vue";
 const props = defineProps({
     page: {
         type: String,

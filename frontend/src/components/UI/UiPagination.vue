@@ -5,7 +5,7 @@
                 {{ item }}
             </li>
         </ul>
-        <div class="select-wrapper">
+        <div class="select-wrapper" v-if="paginationPerPage">
             <span class="select-title">Показать на странице</span>
             <select class="select" @change="(ev) => emit('updatePerPage', ev.target.value)">
                 <option value="10" :selected="paginationPerPage === 10">10</option>
@@ -21,7 +21,7 @@ import { ref } from 'vue';
 const props = defineProps({
     total: Number,
     current: Number,
-    paginationPerPage: Number
+    paginationPerPage: Number | undefined,
 });
 
 const emit = defineEmits(['updatePage', 'updatePerPage']);
@@ -32,7 +32,7 @@ const emit = defineEmits(['updatePage', 'updatePerPage']);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 50px;
+    margin: 50px 0 10px 0;
     .pagination {
         display: flex;
         align-items: center;
