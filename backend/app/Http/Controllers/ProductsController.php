@@ -20,13 +20,19 @@ class ProductsController extends Controller
         $query = $request->all();
         if(array_key_exists('search', $query)) {;
             $search_string = $query['search'];
-            return ProductsResource::collection(Product::where('title', 'like', '%' . $search_string . "%")->get());
+            return ProductsResource::collection(Product::where('title', 'like', '%' . $search_string . "%")
+                ->paginate($query['per_page'])
+                );
         }
         if(array_key_exists('vin', $query)) {
             $search_string = $query['vin'];
-            return ProductsResource::collection(Product::where('vin', '=', $search_string)->get());
+            return ProductsResource::collection(
+                Product::where('vin', '=', $search_string)
+                ->paginate($query['per_page'])
+                
+            );
         }
-        return ProductsResource::collection(Product::all());
+        return ProductsResource::collection(Product::paginate($query['per_page']));
     }
 
     /**
