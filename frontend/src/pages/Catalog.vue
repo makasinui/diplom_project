@@ -4,11 +4,14 @@
             <Search />
         </section>
         <section class="cards-wrapper content">
-            <Card
-                v-for="item in products"
-                :card="item"
+            <transition-group
+                name="fade"
+                tag="section"
+                class="cards-wrapper"
                 v-if="products?.length"
-            />
+            >
+                <Card v-for="item in products" :card="item" :key="item.id" />
+            </transition-group>
             <h2 v-else>Ничего не найдено</h2>
         </section>
         <section class="pagination-wrapper content">
@@ -43,8 +46,12 @@ async function getProducts() {
             ? `vin=${searchString[0]}`
             : `search=${searchString[0]}`;
 
-        const res = await productsService.searchProducts(search, page.value, perPage.value);
-        
+        const res = await productsService.searchProducts(
+            search,
+            page.value,
+            perPage.value
+        );
+
         products.value = res.data;
         perPage.value = res.meta?.per_page;
         total.value = res.meta?.last_page;
@@ -57,8 +64,7 @@ async function getProducts() {
 }
 
 onMounted(getProducts);
-watch([page, perPage], (a,b) => {
-    console.log(a,b)
+watch([page, perPage], (a, b) => {
     getProducts();
 });
 </script>
@@ -76,6 +82,13 @@ watch([page, perPage], (a,b) => {
             justify-content: center;
             align-items: center;
         }
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        opacity: 0;
     }
 }
 </style>
