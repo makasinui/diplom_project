@@ -1,30 +1,87 @@
 <template>
     <div class="custom-pagination">
-        <ul class="pagination">
-            <li @click="emit('updatePage', item)" :class="['pagination-item', current === item ? 'active' : '']" v-for="item in total">
+        <ul class="pagination" v-if="total <= 5">
+            <li
+                @click="emit('updatePage', item)"
+                :class="['pagination-item', current === item ? 'active' : '']"
+                v-for="item in total"
+            >
                 {{ item }}
+            </li>
+        </ul>
+        <ul class="pagination" v-else>
+            <li class="pagination-item" @click="showPreviousPage" v-if="displayLess">
+                &lt;&lt;
+            </li>
+            <template v-for="item in totalValue">
+                <li
+                    @click="emit('updatePage', item)"
+                    :class="['pagination-item', current === item ? 'active' : '']"
+                    v-if="item > from"
+                >
+                    {{ item }}
+                </li>
+            </template>
+            <li v-if="displayMore && total !==6" class="pagination-item" @click="showNextPages">
+                >
+            </li>
+            <li :class="['pagination-item', current === total ? 'active' : '']" @click="emit('updatePage', total)">
+                {{ total }}
             </li>
         </ul>
         <div class="select-wrapper" v-if="paginationPerPage">
             <span class="select-title">Показать на странице</span>
-            <select class="select" @change="(ev) => emit('updatePerPage', ev.target.value)">
-                <option value="10" :selected="paginationPerPage === 10">10</option>
-                <option value="20" :selected="paginationPerPage === 20">20</option>
-                <option value="50" :selected="paginationPerPage === 50">50</option>
+            <select
+                class="select"
+                @change="(ev) => emit('updatePerPage', ev.target.value)"
+            >
+                <option value="10" :selected="paginationPerPage === 10">
+                    10
+                </option>
+                <option value="20" :selected="paginationPerPage === 20">
+                    20
+                </option>
+                <option value="50" :selected="paginationPerPage === 50">
+                    50
+                </option>
             </select>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref } from "vue";
 const props = defineProps({
     total: Number,
     current: Number,
     paginationPerPage: Number | undefined,
 });
 
-const emit = defineEmits(['updatePage', 'updatePerPage']);
+const displayMore = ref(true);
+const displayLess = ref(false);
+/* если у нас больше 5 страниц, отрисовываем другой список */
+const totalValue = ref(5);
+/* с какой страницы отображать */
+const from = ref(0);
+const showNextPages = () => {
+    const max = props.total - totalValue.value;
+    const step = Math.floor(max / 2);
+    if(max === 2 || max === 1) {
+        displayMore.value = false;
+    }
+    totalValue.value = totalValue.value + step;
+    from.value = from.value + step;
+    displayLess.value = true;
+} 
+
+const showPreviousPage = () => {
+    totalValue.value = 5;
+    from.value = 0;
+    displayLess.value = false;
+    displayMore.value = true;
+} 
+
+const emit = defineEmits(["updatePage", "updatePerPage"]);
 </script>
 
 <style lang="scss">
@@ -46,7 +103,7 @@ const emit = defineEmits(['updatePage', 'updatePerPage']);
             &.active {
                 background: #3f64ae;
             }
-    
+
             &:hover {
                 transition: 0.3s all;
                 background: #3f64ae;
@@ -72,7 +129,7 @@ const emit = defineEmits(['updatePage', 'updatePerPage']);
         option {
             min-height: 34px;
             padding: 0 30px 0 12px;
-            color: #4d4d4d;    
+            color: #4d4d4d;
         }
 
         &:hover {
