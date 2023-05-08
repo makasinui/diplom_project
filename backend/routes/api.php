@@ -28,10 +28,7 @@ Route::resources([
 ]);
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    $user = auth('sanctum')->user();
-    if($user && $user->admin) {
-        Route::post('/products', [ProductsController::class, 'store']);
-        Route::put('/products', [ProductsController::class, 'update']);
-        Route::get('/users', [UsersController::class, 'index']);
-    }
+    Route::get('/users', [UsersController::class, 'index'])->middleware('admin');
+    Route::post('/products', [ProductsController::class, 'store'])->middleware('admin');
+    Route::put('/products', [ProductsController::class, 'update'])->middleware('admin');
 });
