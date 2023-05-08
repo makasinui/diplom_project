@@ -6,12 +6,16 @@
                 <ui-input
                     v-model="email"
                     type="email"
+                    :rules="{email: true}"
+                    @error="errorMessage($event)"
                     required
                     label="E-mail"
                 />
                 <ui-input
                     v-model="password"
                     type="password"
+                    @error="errorMessage($event)"
+                    :rules="{min: 8}"
                     required
                     label="Пароль"
                 />
@@ -22,19 +26,34 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useToast } from "vue-toast-notification";
 import AuthService from '@/services/AuthService'
 import router from "../router";
 const email = ref("");
 const password = ref("");
 const authService = new AuthService();
+const toast = useToast();
+const error = ref();
+
+const errorMessage = (err) => {
+    error.value = err;
+};
+
+const allRequiredFilled = computed(() => email.value?.length && password.value?.length);
 
 async function login() {
-    await authService.login({
-        email: email.value, 
-        password: password.value
-    });
-    router.push('/')
+    if(allRequiredFilled.value && !error.value?.length) {
+        const request = await authService.login({
+            email: email.value, 
+            password: password.value
+        });
+        
+        if(request)
+            router.push('/')
+    } else {
+        toast.error("Проверьте правильность введённых данных");
+    }
 }
 </script>
 

@@ -30,7 +30,7 @@ export default class AuthService {
             if(err?.response && err.response.status === 401) {
                 this.toast.error('Неправильный логин или пароль', { duration: 5000 })
             }
-            return;
+            return false;
         }
     }
 
@@ -45,7 +45,7 @@ export default class AuthService {
             if(err?.response && err.response.status === 401) {
                 this.toast.error('Ошибка!', { duration: 5000 })
             }
-            return;
+            return false;
         }
     }
 
