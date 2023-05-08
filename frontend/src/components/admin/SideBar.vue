@@ -28,5 +28,16 @@ const emit = defineEmits(['changeTab'])
             border: 1px solid white;
         }
     }
+
+    @media screen and (max-width: 1000px) {
+        margin-bottom: 20px;
+        flex: 0 0 100px;
+
+        .menu {
+            &-item {
+                padding: 5px;
+            }
+        }
+    }
 }
 </style>

@@ -35,20 +35,20 @@ const columnsFields = computed(() =>
 
 <style lang="scss" scoped>
 .table-wrapper {
-    width: 100%;
     padding-left: 20px;
+    overflow-x: auto;
+    flex: 1 0 auto;
     table {
-        overflow-x: auto;
         border-radius: 5px;
         font-size: 16px;
         font-weight: normal;
         border: none;
         border-collapse: collapse;
-        width: 100%;
-        max-width: 100%;
         white-space: nowrap;
         background-color: white;
         table-layout: fixed;
+        min-width: 600px;
+        width: 100%;
     }
     tr {
         display: table-row;
@@ -71,6 +71,10 @@ const columnsFields = computed(() =>
     tfoot {
         background-color: #333;
         color: #fff;
+    }
+
+    @media screen and (max-width: 1000px) {
+        padding-left: 0;
     }
 }
 </style>

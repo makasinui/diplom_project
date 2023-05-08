@@ -18,6 +18,7 @@
             <ui-pagination
                 :current="page"
                 :total="total"
+                :paginationPerPage="perPage"
                 @updatePage="(ev) => (page = ev)"
                 @updatePerPage="(ev) => (perPage = ev)"
             />

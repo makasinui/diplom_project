@@ -4,9 +4,6 @@
             <SideBar @changeTab="(ev) => tab = ev" />
             <component :is="component" />
         </div>
-        <div class="wrapper">
-            <ui-pagination :total="2" :current="2" />
-        </div>
     </Layout>
 </template>
 
@@ -34,12 +31,13 @@ const component = computed(() => {
     .main-content {
         height: 100%;
         display: flex;
+
+        @media(max-width: 1000px) {
+            flex-direction: column;
+        }
     }
     .image-short {
         max-width: 70px;
-    }
-    .custom-pagination {
-        margin-left: 300px;
     }
 }
 </style>
