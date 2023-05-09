@@ -15,8 +15,9 @@ export default class AuthService {
         await this.userService.getUser();
     }
 
-    removeToken() {
+    async removeToken() {
         localStorage.removeItem('token');
+        await this.userService.getUser();
     }
 
     async login(data) {
@@ -54,8 +55,7 @@ export default class AuthService {
     }
 
     async logout() {
-        this.removeToken();
+        await this.removeToken();
         this.toast.success('Успешно', { duration: 5000 });
-        this.userService.getUser();
     }
 }

@@ -33,7 +33,11 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
     if (to?.meta?.forAdmin) {
-        const user = store.getters.user;
+        let user = JSON.parse(localStorage.getItem('user') || '{}');
+        window.addEventListener('user', () => {
+            user = store.getters.user;
+        })
+
         if (user.admin) {
             next();
         } else {
