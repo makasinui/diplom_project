@@ -3,7 +3,7 @@
         <ul class="menu">
             <li class="menu-item" @click="() => emit('changeTab', 'Products')">Товары</li>
             <li class="menu-item" @click="() => emit('changeTab', 'Users')">Пользователи</li>
-            <li class="menu-item">Заказы</li>
+            <li class="menu-item" @click="() => emit('changeTab', 'Orders')">Заказы</li>
         </ul>
     </section>
 </template>

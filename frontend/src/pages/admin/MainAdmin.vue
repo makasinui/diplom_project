@@ -13,12 +13,15 @@ import { computed, ref } from 'vue';
 import SideBar from "@/components/admin/SideBar.vue";
 import Products from './tabs/Products.vue';
 import Users from './tabs/Users.vue';
+import Orders from './tabs/Orders.vue'
 
 const tab = ref('Products');
 
 const component = computed(() => {
     if(tab.value === 'Products') 
         return Products;
+    if(tab.value === 'Orders')
+        return Orders;
     return Users;
 })
 </script>
