@@ -1,24 +1,91 @@
 <template>
     <Layout page="cart">
-        <h2 class="primary-title content">Корзина</h2>
-        <section class="cart-content content">
-            <h3 v-if="!cards?.length">Пусто</h3>
-            <transition-group name="fade" tag="div" class="cart-content">
-                <cart-item
-                    @delete-cart="getCardsContent"
-                    v-for="item in cards"
-                    :card="item"
-                    :key="item.id"
+        <section class="main-content">
+            <h2 class="primary-title content">Корзина</h2>
+            <section class="cart-content content">
+                <h3 v-if="!cards?.length">Пусто</h3>
+                <transition-group name="fade" tag="div" class="cart-content">
+                    <cart-item
+                        @delete-cart="getCardsContent"
+                        v-for="item in cards"
+                        :card="item"
+                        :key="item.id"
+                    />
+                </transition-group>
+            </section>
+        </section>
+        <section class="form content" v-if="total">
+            <h2 class="primary-title">Всего: {{ total }}р</h2>
+            <form novalidate @submit.prevent="sendOrder" class="form-main content" v-if="!user?.name">
+                <ui-input 
+                    v-model="name" 
+                    type="text" 
+                    required
+                    @error="errorMessage($event)"
+                    :rules="{min: 2}"
+                    label="Имя" 
                 />
-            </transition-group>
+                <ui-input
+                    v-model="email"
+                    type="email"
+                    @error="errorMessage($event)"
+                    required
+                    label="E-mail"
+                />
+                <ui-input
+                    v-model="password"
+                    type="password"
+                    @error="errorMessage($event)"
+                    :rules="{min: 8}"
+                    required
+                    label="Пароль"
+                />
+                <ui-input
+                    v-model="passwordConfirmation"
+                    type="password"
+                    @error="errorMessage($event)"
+                    :rules="{min: 8}"
+                    required
+                    label="Подтверждение пароля"
+                />
+                <ui-button bold className="button-send">Оформить заказ</ui-button>
+            </form>
+            <ui-button @click="sendOrder" v-else bold className="button-send">Оформить заказ</ui-button>
         </section>
     </Layout>
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
+import { useToast } from "vue-toast-notification";
 import CartItem from "../components/CartItem.vue";
+import AuthService from "../services/AuthService";
+import OrderService from "../services/OrderService";
 const cards = ref([]);
+const total = ref(0);
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const passwordConfirmation = ref('');
+
+const error = ref('');
+const toast = useToast();
+const user = ref(JSON.parse(localStorage.getItem("user") || "{}"));
+const allRequiredFields = computed(() => 
+    name.value?.length && 
+    email.value?.length && 
+    password.value?.length && 
+    passwordConfirmation.value?.length && 
+    password.value?.length === passwordConfirmation.value?.length
+)
+
+const orderService = new OrderService();
+const authService = new AuthService();
+
+const errorMessage = (err) => {
+    error.value = err;
+};
 
 const getCardsContent = () => {
     const localStorageCards = localStorage.getItem("cart");
@@ -27,13 +94,53 @@ const getCardsContent = () => {
     } else {
         cards.value = [];
     }
+
+    // общая сумма
+    total.value = cards.value.reduce((p, c) => +p + c.price, "");
 };
+
+const createOrder = async () => {
+    const id = cards.value.map(card => card.id);
+    const res = await orderService.makeOrder(id);
+    if(res.status === 201) {
+        toast.success('Заказ успешно создан!');
+        localStorage.removeItem('cart');
+        cards.value = [];
+        total.value = '';
+    }
+    return;
+}
+
+const sendOrder = async () => {
+    if(user.value?.name) {
+        await createOrder();
+    }
+
+    if(!error.value?.length && allRequiredFields.value) {
+        const res = await authService.register({
+            email: email.value,
+            password: password.value,
+            password_confirmation: passwordConfirmation.value,
+            name: name.value,
+        }); 
+        
+        res && await createOrder();
+        return;
+    }
+
+    toast.error('Проверьте поля формы!')
+}
 
 onMounted(getCardsContent);
 </script>
 
 <style lang="scss">
 .cart-wrapper {
+    display: flex;
+    justify-content: space-between;
+    .main-content {
+        flex: 0 1 65%;
+    }
     .cart-content {
         display: flex;
         flex-wrap: wrap;
@@ -46,12 +153,21 @@ onMounted(getCardsContent);
             justify-content: center;
         }
     }
-}
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity 0.5s;
-}
-.fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
-    opacity: 0;
+
+    .form {
+        flex: 0 1 35%;
+
+        .button-send {
+            background: green;
+            margin-top: 20px;
+        }
+    }
+    .fade-enter-active,
+    .fade-leave-active {
+        transition: opacity 0.5s;
+    }
+    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+        opacity: 0;
+    }
 }
 </style>
