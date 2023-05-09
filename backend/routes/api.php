@@ -6,6 +6,7 @@ use App\Http\Controllers\GetController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 /*
@@ -31,4 +32,6 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/users', [UsersController::class, 'index'])->middleware('admin');
     Route::post('/products', [ProductsController::class, 'store'])->middleware('admin');
     Route::put('/products', [ProductsController::class, 'update'])->middleware('admin');
+    Route::get('/order', [OrderController::class, 'index'])->middleware('admin');
+    Route::post('/order', [OrderController::class, 'create']);
 });
