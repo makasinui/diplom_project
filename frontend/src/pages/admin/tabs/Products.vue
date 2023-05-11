@@ -6,7 +6,7 @@
                 <ui-switcher @change="(val) => changePopular(val, row)" :value="value" />
             </template>
             <template #img="{ value }">
-                <img class="image-short" :src="value"/>
+                <img class="image-short" :src="image"/>
             </template>
             <template #actions="{ row }">
                 <!-- todo: return id in slot -->
@@ -29,7 +29,7 @@
             <template #body>
                 <div class="edit-wrapper">
                     <div class="image">
-                        <img :src="editableItem.img">
+                        <img :src="image">
                     </div>
                     <div class="content-form">
                         <ui-input 
@@ -89,6 +89,8 @@ const products = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
+/* TODO: replace image */
+const image = new URL('@/assets/img/Rectangle 9.png', import.meta.url).href;
 
 const loading = ref(false);
 
