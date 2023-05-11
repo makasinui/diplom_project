@@ -1,5 +1,6 @@
 <template>
     <div class="users-wrapper">
+        <Loader v-if="loading" />
         <Table :columns="cols" :rows="users">
             <template #actions>
                 <!-- todo: return id in slot -->
@@ -31,12 +32,15 @@ const users = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
+const loading = ref(false);
 
 const fetchUsers = async () => {
+    loading.value = true;
     const res = await adminService.getAllUsers();
     users.value = res.data;
     total.value = res?.last_page;
     perPage.value = res?.per_page;
+    loading.value = false;
 };
 
 onMounted(async () => {

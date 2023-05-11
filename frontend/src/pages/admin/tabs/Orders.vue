@@ -1,5 +1,6 @@
 <template>
     <div class="orders-wrapper">
+        <Loader v-if="loading" />
         <Table :columns="cols" :rows="orders">
             <template #actions>
                 <!-- todo: return id in slot -->
@@ -45,12 +46,15 @@ const orders = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
+const loading = ref(false);
 
 const fetchOrders = async () => {
+    loading.value = true;
     const res = await adminService.getAllOrders();
     orders.value = res;
     total.value = res?.last_page;
     perPage.value = res?.per_page;
+    loading.value = false;
 };
 
 const openProducts = async (id) => {};

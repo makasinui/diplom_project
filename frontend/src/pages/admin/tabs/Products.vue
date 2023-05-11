@@ -1,5 +1,6 @@
 <template>
     <div class="products-wrapper">
+        <Loader v-if="loading" />
         <Table :columns="cols" :rows="products">
             <template #img="{ value }">
                 <img class="image-short" :src="value"/>
@@ -31,12 +32,15 @@ const products = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
+const loading = ref(false);
 
 const fetchProducts = async () => {
+    loading.value = true;
     const res = await adminService.getAllProducts(page.value, perPage.value);
     products.value = res.data;
     total.value = res.meta?.last_page;
     perPage.valeu = res.meta?.per_page;
+    loading.value = false;
 }
 
 onMounted(async () => {

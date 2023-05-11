@@ -4,6 +4,7 @@
             <Search />
         </section>
         <section class="cards-wrapper content">
+            <Loader v-if="loading" />
             <transition-group
                 name="fade"
                 tag="section"
@@ -37,9 +38,12 @@ const products = ref();
 const page = ref(1);
 const perPage = ref(10);
 const total = ref(1);
+const loading = ref(false);
 
 async function getProducts() {
     const productsService = new ProductsService();
+    loading.value = true;
+
     const searchString =
         router.currentRoute.value.params.searchString.split("&");
     if (searchString[0] !== "" && searchString[0] !== "undefined") {
@@ -56,12 +60,14 @@ async function getProducts() {
         products.value = res.data;
         perPage.value = res.meta?.per_page;
         total.value = res.meta?.last_page;
+        loading.value = false;
         return;
     }
     const res = await productsService.getAll(page.value, perPage.value);
     products.value = res.data;
     perPage.value = res.meta.per_page;
     total.value = res.meta.last_page;
+    loading.value = false;
 }
 
 onMounted(getProducts);

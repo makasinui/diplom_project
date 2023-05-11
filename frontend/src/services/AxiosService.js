@@ -2,7 +2,6 @@ import axios from "axios"
 
 export const AxiosService = () => {
     const axiosInstance =  axios.create({
-        timeout: 5000,
         withCredentials: true,
         headers: { Authorization: `'Bearer ${localStorage.getItem("token")}` },
     });
