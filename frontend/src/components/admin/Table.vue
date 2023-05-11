@@ -11,7 +11,7 @@
             <tbody>
                 <tr v-for="row in rows">
                     <td v-for="(key, i) in columnsFields">
-                        <slot :name="key" :value="row[key]">
+                        <slot :name="key" :value="row[key]" :row="row">
                             {{ row[key] }}
                         </slot>
                     </td>

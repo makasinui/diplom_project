@@ -2,6 +2,9 @@
     <div class="products-wrapper">
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="products">
+            <template #popular="{ value, row }">
+                <ui-switcher @change="(val) => changePopular(val, row)" :value="value" />
+            </template>
             <template #img="{ value }">
                 <img class="image-short" :src="value"/>
             </template>
@@ -26,8 +29,10 @@ import Table from '@/components/admin/Table.vue';
 import AdminService from '@/services/AdminService.js';
 import ActionsCell from '@/components/admin/table-layout/ActionsCell.vue';
 import { onMounted, ref, watch } from 'vue';
+import ProductsService from '../../../services/ProductsService';
 
 const adminService = new AdminService();
+const productsService = new ProductsService();
 const products = ref([]);
 const page = ref(1);
 const total = ref(1);
@@ -69,6 +74,10 @@ const cols = [
         title: 'Изображение'
     },
     {
+        field: 'popular',
+        title: 'Популярный'
+    },
+    {
         field: 'actions',
         title: 'Действия'
     }
@@ -76,6 +85,12 @@ const cols = [
 
 const editItem = () => console.log('edit')
 const deleteItem = () => console.log('delete')
+const changePopular = async (value, row) => {
+    loading.value = true;
+    const data = {...row, popular: Number(value)}
+    await productsService.changePopular(data, value)
+    loading.value = false;
+}
 
 watch([page, perPage], async () => {
     await fetchProducts();
