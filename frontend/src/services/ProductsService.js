@@ -16,7 +16,7 @@ export default class ProductsService {
     }
 
     getPopular() {
-        return this.httpService.get(this.url).then(({ data }) => data);
+        return this.httpService.get(`${this.url}/popular`).then(({ data }) => data);
     }
 
     searchProducts(search, page = 1, perPage = 10) {
@@ -25,9 +25,19 @@ export default class ProductsService {
             .then(({ data }) => data);
     }
 
-    changePopular(data) {
+    update(data) {
         try {
             const res = this.httpService.update(`${this.url}/${data.id}`, data)
+            this.toast.success('Успешно')
+            return res;
+        } catch(err) {
+            this.toast.error('Ошибка')
+        }
+    }
+
+    delete(id) {
+        try {
+            const res = this.httpService.delete(`${this.url}/${id}`)
             this.toast.success('Успешно')
             return res;
         } catch(err) {

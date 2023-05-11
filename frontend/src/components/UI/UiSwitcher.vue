@@ -1,17 +1,18 @@
 <template>
     <label class="checkbox">
+        <span class="label" v-if="label">{{ label }}</span>
         <input
             class="checkbox-popular"
             type="checkbox"
             :checked="value"
-            @change="(ev) => emit('change', ev.target.checked)"
+            @change="(ev) => emit('change', Number(ev.target.checked))"
         />
         <span class="checkbox-switch"></span>
     </label>
 </template>
 
 <script setup>
-defineProps({ value: Boolean });
+defineProps({ value: Boolean, label: String });
 const emit = defineEmits(["change"]);
 </script>
 
@@ -25,6 +26,10 @@ const emit = defineEmits(["change"]);
     vertical-align: middle;
     font-size: 14px;
     user-select: none;
+
+    .label {
+        margin-right: 1rem;
+    }
 
     &-popular {
         display: block;

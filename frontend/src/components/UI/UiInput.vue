@@ -8,6 +8,16 @@
             :type="type"
             :maxlength="max"
             :minlength="min"
+            :value="modelValue"
+            v-if="!textArea"
+        />
+        <textarea
+            v-else
+            rows="5"
+            cols="22"
+            :maxlength="max"
+            :minlength="min"
+            :value="modelValue"
         />
         <span class="ui-error">{{ errorMessage }}</span>
     </div>
@@ -29,30 +39,33 @@ const props = defineProps({
     required: Boolean,
     value: String,
     rules: Object,
+    modelValue: String,
+    textArea: Boolean,
 });
-const emit = defineEmits("update:modelValue", 'error');
+const emit = defineEmits("update:modelValue", "error");
 
 function onChange(val) {
     emit("update:modelValue", val);
     if (val.length > max.value) {
-        errorMessage.value = "Превышено максимально допустимое кол-во символов!";
-        emit('error', errorMessage.value)
+        errorMessage.value =
+            "Превышено максимально допустимое кол-во символов!";
+        emit("error", errorMessage.value);
         return;
     }
 
     if (val.length < min.value) {
         errorMessage.value = `Минимальное кол-во символов: ${min.value}`;
-        emit('error', errorMessage.value)
+        emit("error", errorMessage.value);
         return;
     }
 
     if (requiredAlias.value && val.indexOf("@") === -1) {
         errorMessage.value = "Неправильно указан email";
-        emit('error', errorMessage.value)
+        emit("error", errorMessage.value);
         return;
     }
-    errorMessage.value = '';
-    emit('error', errorMessage.value)
+    errorMessage.value = "";
+    emit("error", errorMessage.value);
 }
 
 function customValidation() {
@@ -69,7 +82,7 @@ function customValidation() {
     }
 }
 
-onMounted(customValidation)
+onMounted(customValidation);
 </script>
 
 <style lang="scss" scoped>
