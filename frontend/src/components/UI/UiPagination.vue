@@ -33,7 +33,7 @@
             <span class="select-title">Показать на странице</span>
             <select
                 class="select"
-                @change="(ev) => emit('updatePerPage', ev.target.value)"
+                @change="(ev) => {emit('updatePerPage', ev.target.value); emit('updatePage', 1)}"
             >
                 <option value="10" :selected="paginationPerPage === 10">
                     10

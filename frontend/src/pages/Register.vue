@@ -70,7 +70,7 @@ const allRequiredFilled = computed(
 
 async function register() {
     /* проверяем на ошибки */
-    if(error.value?.length && allRequiredFilled.value) {
+    if(!error.value?.length && allRequiredFilled.value) {
          await authService.register({
               email: email.value,
               password: password.value,
