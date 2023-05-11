@@ -44,13 +44,12 @@ const allRequiredFilled = computed(() => email.value?.length && password.value?.
 
 async function login() {
     if(allRequiredFilled.value && !error.value?.length) {
-        const request = await authService.login({
+        await authService.login({
             email: email.value, 
             password: password.value
         });
         
-        if(request)
-            router.push('/')
+        router.push('/')
     } else {
         toast.error("Проверьте правильность введённых данных");
     }
