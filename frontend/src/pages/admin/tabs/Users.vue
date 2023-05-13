@@ -150,9 +150,13 @@ watch([page, perPage], async () => {
     align-items: flex-start;
     justify-content: flex-start;
     overflow-x: auto;
-
+    
+    .modal-header {
+        text-align: center;
+    }
     .edit-wrapper {
         display: flex;
+        justify-content: center;
         gap: 20px;
     }
 }

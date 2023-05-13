@@ -190,13 +190,26 @@ watch([page, perPage], async () => {
             }
         }
     }
+    .modal-wrapper {
+        .edit-wrapper {
+            display: flex;
+            gap: 20px;
+    
+            .image img {
+                max-width: 270px;
+            }
+        }
 
-    .edit-wrapper {
-        display: flex;
-        gap: 20px;
+        @media screen and (max-width: 560px) {
+            .edit-wrapper {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
 
-        .image img {
-            max-width: 270px;
+                .image img {
+                    max-width: 200px
+                }
+            }
         }
     }
 }

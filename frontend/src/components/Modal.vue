@@ -70,6 +70,11 @@ const emit = defineEmits(["close", "save"]);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
     font-family: Helvetica, Arial, sans-serif;
+
+    @media screen and (max-width: 560px) {
+        max-width: 240px;
+    }
+
 }
 
 .modal-header {
