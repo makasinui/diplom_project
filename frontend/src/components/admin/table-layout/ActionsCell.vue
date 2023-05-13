@@ -1,6 +1,6 @@
 <template>
     <div class="actioncell">
-        <ui-button @click="emit('edit')" className="actioncell-btn__primary">
+        <ui-button v-if="!disableEdit" @click="emit('edit')" className="actioncell-btn__primary">
             <img class="small-icon" :src="penIcon" alt="Редактировать">
         </ui-button>
         <ui-button @click="emit('delete')" className="actioncell-btn__primary delete">
@@ -13,6 +13,9 @@
 import trashIcon from '@/assets/img/trash.png';
 import penIcon from '@/assets/img/pen.png';
 
+defineProps({
+    disableEdit: Boolean
+})
 const emit = defineEmits(['edit', 'delete'])
 </script>
 

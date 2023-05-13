@@ -51,7 +51,7 @@ const loading = ref(false);
 const fetchOrders = async () => {
     loading.value = true;
     const res = await adminService.getAllOrders();
-    orders.value = res;
+    orders.value = res?.data;
     total.value = res?.last_page;
     perPage.value = res?.per_page;
     loading.value = false;

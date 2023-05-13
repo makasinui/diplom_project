@@ -25,9 +25,9 @@ export default class ProductsService {
             .then(({ data }) => data);
     }
 
-    update(data) {
+    async update(data) {
         try {
-            const res = this.httpService.update(`${this.url}/${data.id}`, data)
+            const res = await this.httpService.update(`${this.url}/${data.id}`, data)
             this.toast.success('Успешно')
             return res;
         } catch(err) {
@@ -35,9 +35,9 @@ export default class ProductsService {
         }
     }
 
-    delete(id) {
+    async delete(id) {
         try {
-            const res = this.httpService.delete(`${this.url}/${id}`)
+            const res = await this.httpService.delete(`${this.url}/${id}`)
             this.toast.success('Успешно')
             return res;
         } catch(err) {

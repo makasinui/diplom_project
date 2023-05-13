@@ -31,7 +31,10 @@ Route::resources([
 Route::group(['middleware' => 'auth:sanctum'], function() {
     Route::get('/users', [UsersController::class, 'index'])->middleware('admin');
     Route::post('/products', [ProductsController::class, 'store'])->middleware('admin');
-    Route::put('/products/:id', [ProductsController::class, 'update'])->middleware('admin');
+    Route::put('/products/{id}', [ProductsController::class, 'update'])->middleware('admin');
     Route::get('/order', [OrderController::class, 'index'])->middleware('admin');
     Route::post('/order', [OrderController::class, 'create']);
+    Route::post('/user/{id}', [UsersController::class, 'makeAdminRole'])->middleware('admin');
+    Route::put('/user/{id}', [UsersController::class, 'update'])->middleware('admin');
+    Route::delete('/user/{id}', [UsersController::class, 'destroy'])->middleware('admin');
 });
