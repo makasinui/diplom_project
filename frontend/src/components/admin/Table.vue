@@ -75,5 +75,10 @@ const columnsFields = computed(() =>
     @media screen and (max-width: 1000px) {
         padding-left: 0;
     }
+    @media screen and (max-width: 800px) { 
+        table {
+            table-layout: auto;
+        }
+    }
 }
 </style>

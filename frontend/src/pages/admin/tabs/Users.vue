@@ -10,15 +10,15 @@
                 {{ value ? "Да" : "Нет" }}
             </template>
         </Table>
-        <div class="wrapper">
-            <ui-pagination
-                :total="total"
-                :current="page"
-                :paginationPerPage="perPage"
-                @updatePage="(ev) => (page = ev)"
-                @updatePerPage="(ev) => (perPage = ev)"
-            />
-        </div>
+    </div>
+    <div class="pagination-table__wrapper">
+        <ui-pagination
+            :total="total"
+            :current="page"
+            :paginationPerPage="perPage"
+            @updatePage="(ev) => (page = ev)"
+            @updatePerPage="(ev) => (perPage = ev)"
+        />
     </div>
 </template>
 <script setup>
@@ -85,15 +85,5 @@ watch([page, perPage], async () => {
     align-items: flex-start;
     justify-content: flex-start;
     overflow-x: auto;
-    .wrapper {
-        width: 100%;
-        .custom-pagination {
-            margin-left: 20px;
-
-            @media screen and (max-width: 1000px) {
-                margin-left: 0;
-            }
-        }
-    }
 }
 </style>

@@ -13,15 +13,6 @@
                 <ActionsCell @edit="editItem(row)" @delete="deleteItem(row.id)" />
             </template>
         </Table>
-        <div class="wrapper">
-            <ui-pagination 
-                :total="total"
-                :current="page"
-                :paginationPerPage="perPage"
-                @updatePage="(ev) => (page = ev)"
-                @updatePerPage="(ev) => perPage = ev"
-            />
-        </div>
         <Modal :show="showModal" @close="showModal = false" @save="updateProduct">
             <template #header>
                 Редактирование товара
@@ -70,7 +61,17 @@
                 </div>
             </template>
         </Modal>
+        
     </div>
+    <div class="pagination-table__wrapper">
+            <ui-pagination 
+                :total="total"
+                :current="page"
+                :paginationPerPage="perPage"
+                @updatePage="(ev) => (page = ev)"
+                @updatePerPage="(ev) => perPage = ev"
+            />
+        </div>
 </template>
 <script setup>
 import Table from '@/components/admin/Table.vue';

@@ -1,5 +1,5 @@
 <template>
-    <div class="custom-pagination">
+    <div class="custom-pagination" v-if="total < 1">
         <ul class="pagination" v-if="total <= 5">
             <li
                 @click="emit('updatePage', item)"
@@ -137,6 +137,11 @@ const emit = defineEmits(["updatePage", "updatePerPage"]);
             transition: 0.3s all;
             color: #4d4d4d;
         }
+    }
+
+    @media screen and (max-width: 515px) {
+        flex-direction: column;
+        gap: 15px;
     }
 }
 </style>
