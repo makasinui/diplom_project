@@ -1,5 +1,5 @@
 <template>
-    <div class="custom-pagination" v-if="total < 1">
+    <div class="custom-pagination" v-if="total > 1">
         <ul class="pagination" v-if="total <= 5">
             <li
                 @click="emit('updatePage', item)"
