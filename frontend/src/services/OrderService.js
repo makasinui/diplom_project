@@ -5,7 +5,11 @@ export default class OrderService {
     httpService = new HttpService();
 
     getAll() {
-        return this.httpService.get(this.url).then(({data}) => data);
+        try {
+            return this.httpService.get(this.url).then(({data}) => data);
+        } catch(err) {
+            return err;
+        }
     }
 
     makeOrder(id) {

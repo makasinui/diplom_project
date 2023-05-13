@@ -71,13 +71,15 @@ const allRequiredFilled = computed(
 async function register() {
     /* проверяем на ошибки */
     if(!error.value?.length && allRequiredFilled.value) {
-         await authService.register({
+         const res = await authService.register({
               email: email.value,
               password: password.value,
               password_confirmation: passwordConfirmation.value,
               name: name.value,
           });
-          router.push('/')
+          if(res) {
+            router.push('/');
+          }
     }
     else toast.error("Проверьте правильность введённых данных");
 }

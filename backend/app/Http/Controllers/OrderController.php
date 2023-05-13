@@ -8,9 +8,11 @@ use App\Models\Product;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {   
-        return Order::with(['products', 'user'])->get();
+        $per_page = $request->all()['per_page'] ?? 10;
+
+        return Order::with(['products', 'user'])->paginate($per_page);
     }
 
     public function create(Request $request)

@@ -3,14 +3,14 @@
         <table>
             <thead>
                 <tr>
-                    <th v-for="(col, i) in columns">
+                    <th v-for="(col, i) in columns" :key="i">
                         {{ col.title }}
                     </th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="row in rows">
-                    <td v-for="(key, i) in columnsFields">
+                <tr v-for="(row, i) in rows" :key="i">
+                    <td v-for="(key, j) in columnsFields" :key="j">
                         <slot :name="key" :value="row[key]" :row="row">
                             {{ row[key] }}
                         </slot>
@@ -64,7 +64,6 @@ const columnsFields = computed(() =>
     td {
         border: 1px solid #333;
         vertical-align: middle;
-
     }
 
     thead,

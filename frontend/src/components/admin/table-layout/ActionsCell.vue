@@ -22,6 +22,7 @@ const emit = defineEmits(['edit', 'delete'])
     justify-content: space-evenly;
     &-btn__primary {
         background: #3f64ae;
+        padding: 2px 5px !important;
 
         &.delete {
             background: #d71515;

@@ -9,6 +9,7 @@
             :maxlength="max"
             :minlength="min"
             :value="modelValue"
+            :autocomplete="type === 'password' ? 'on' : ''"
             v-if="!textArea"
         />
         <textarea
@@ -42,7 +43,7 @@ const props = defineProps({
     modelValue: String,
     textArea: Boolean,
 });
-const emit = defineEmits("update:modelValue", "error");
+const emit = defineEmits(["update:modelValue", "error"]);
 
 function onChange(val) {
     emit("update:modelValue", val);

@@ -32,17 +32,24 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
+    let user = JSON.parse(localStorage.getItem('user') || '{}');
+    window.addEventListener('user', () => {
+        user = store.getters.user;
+    })
     if (to?.meta?.forAdmin) {
-        let user = JSON.parse(localStorage.getItem('user') || '{}');
-        window.addEventListener('user', () => {
-            user = store.getters.user;
-        })
 
         if (user.admin) {
             next();
+            return;
         } else {
-            router.push('/404')
+            next('/404')
+            return;
         }
+    }
+    
+    if(to.path === '/login' || to.path === '/register' && user?.name) {
+        next('/');
+        return;
     }
     next();
 });

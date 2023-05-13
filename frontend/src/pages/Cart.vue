@@ -16,40 +16,45 @@
         </section>
         <section class="form content" v-if="total">
             <h2 class="primary-title">Всего: {{ total }}р</h2>
-            <form novalidate @submit.prevent="sendOrder" class="form-main content" v-if="!user?.name">
-                <ui-input 
-                    v-model="name" 
-                    type="text" 
-                    required
-                    @error="errorMessage($event)"
-                    :rules="{min: 2}"
-                    label="Имя" 
-                />
-                <ui-input
-                    v-model="email"
-                    type="email"
-                    @error="errorMessage($event)"
-                    required
-                    label="E-mail"
-                />
-                <ui-input
-                    v-model="password"
-                    type="password"
-                    @error="errorMessage($event)"
-                    :rules="{min: 8}"
-                    required
-                    label="Пароль"
-                />
-                <ui-input
-                    v-model="passwordConfirmation"
-                    type="password"
-                    @error="errorMessage($event)"
-                    :rules="{min: 8}"
-                    required
-                    label="Подтверждение пароля"
-                />
-                <ui-button bold className="button-send">Оформить заказ</ui-button>
-            </form>
+            <section class="non-register" v-if="!user?.name">
+                <form novalidate @submit.prevent="sendOrder" class="form-main content">
+                    <ui-input
+                        v-model="name"
+                        type="text"
+                        required
+                        @error="errorMessage($event)"
+                        :rules="{min: 2}"
+                        label="Имя"
+                    />
+                    <ui-input
+                        v-model="email"
+                        type="email"
+                        @error="errorMessage($event)"
+                        required
+                        label="E-mail"
+                    />
+                    <ui-input
+                        v-model="password"
+                        type="password"
+                        @error="errorMessage($event)"
+                        :rules="{min: 8}"
+                        required
+                        label="Пароль"
+                    />
+                    <ui-input
+                        v-model="passwordConfirmation"
+                        type="password"
+                        @error="errorMessage($event)"
+                        :rules="{min: 8}"
+                        required
+                        label="Подтверждение пароля"
+                    />
+                    <ui-button bold className="button-send">Оформить заказ</ui-button>
+                
+                </form>
+                <router-link to="/login"><ui-button className="button-login" bold>Или войти</ui-button></router-link>
+            </section>
+
             <ui-button @click="sendOrder" v-else bold className="button-send">Оформить заказ</ui-button>
         </section>
     </Layout>
@@ -162,12 +167,38 @@ onMounted(getCardsContent);
             margin-top: 20px;
         }
     }
+    .non-register {
+        display: flex;
+        gap: 150px;
+        align-items: center;
+
+        .button-login {
+            background: #3f64ae;
+            padding: 25px;
+        }
+
+        @media screen and (max-width: 1000px) {
+            flex-direction: column;
+            gap: 20px;
+
+        }
+    }
     .fade-enter-active,
     .fade-leave-active {
         transition: opacity 0.5s;
     }
     .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
         opacity: 0;
+    }
+
+    @media screen and (max-width: 600px) {
+        flex-direction: column-reverse;
+        text-align: center;
+
+        .form .button-send {
+            margin: 0 auto;
+            margin-top: 15px;
+        }
     }
 }
 </style>

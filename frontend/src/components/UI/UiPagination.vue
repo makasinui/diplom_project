@@ -5,6 +5,7 @@
                 @click="emit('updatePage', item)"
                 :class="['pagination-item', current === item ? 'active' : '']"
                 v-for="item in total"
+                :key="item"
             >
                 {{ item }}
             </li>
@@ -13,7 +14,7 @@
             <li class="pagination-item" @click="showPreviousPage" v-if="displayLess">
                 &lt;&lt;
             </li>
-            <template v-for="item in totalValue">
+            <template v-for="item in totalValue" :key="item">
                 <li
                     @click="emit('updatePage', item)"
                     :class="['pagination-item', current === item ? 'active' : '']"

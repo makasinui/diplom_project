@@ -12,7 +12,7 @@
 </template>
 
 <script setup>
-defineProps({ value: Boolean, label: String });
+defineProps({ value: Number, label: String });
 const emit = defineEmits(["change"]);
 </script>
 

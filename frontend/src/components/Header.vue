@@ -12,9 +12,6 @@
                 <router-link to="/about-us">О нас</router-link>
             </li>
             <li class="menu__item">
-                <router-link to="/clients">Клиентам</router-link>
-            </li>
-            <li class="menu__item">
                 <router-link to="/catalog">Каталог</router-link>
             </li>
             <li class="menu__item">
@@ -55,9 +52,6 @@
             </li>
             <li class="menu__item">
                 <router-link to="/about-us">О нас</router-link>
-            </li>
-            <li class="menu__item">
-                <router-link to="/clients">Клиентам</router-link>
             </li>
             <li class="menu__item">
                 <router-link to="/catalog">Каталог</router-link>
@@ -141,7 +135,8 @@ watch(openMobileMenu, (val) => {
 
     .main-menu {
         display: flex;
-        justify-content: space-between;
+        gap: 25px;
+        margin-left: 10px;
         width: 100%;
         max-width: 500px;
         @media (max-width: 1000px) {

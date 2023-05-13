@@ -86,5 +86,11 @@ const addToCart = () => {
       }
     }
   }
+
+  @media screen and (max-width: 600px) {
+    .card__button .button {
+      margin: 0 auto;
+    }
+  }
 }
 </style>

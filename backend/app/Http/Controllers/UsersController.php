@@ -7,8 +7,9 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
-    public function index() 
+    public function index(Request $request) 
     {
-        return User::paginate(15);
+        $per_page = $request->all()['perPage'] ?? 10;
+        return User::paginate($per_page);
     }
 }
