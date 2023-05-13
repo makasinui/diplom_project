@@ -1,5 +1,4 @@
 <template>
-    <ui-button green bold className="add-button">Добавить</ui-button>
     <div class="users-wrapper">
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="users">
