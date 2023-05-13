@@ -16,7 +16,6 @@
                         class="modal-save-button"
                         @click="
                             () => {
-                                emit('close');
                                 emit('save');
                             }
                         "

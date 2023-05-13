@@ -35,6 +35,16 @@ export default class ProductsService {
         }
     }
 
+    async create(data) {
+        try {
+            const res = await this.httpService.post(`${this.url}`, data)
+            this.toast.success('Успешно')
+            return res;
+        } catch(err) {
+            this.toast.error('Ошибка')
+        }
+    }
+
     async delete(id) {
         try {
             const res = await this.httpService.delete(`${this.url}/${id}`)

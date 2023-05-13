@@ -15,6 +15,7 @@
         <textarea
             v-else
             rows="5"
+            @change="onChange($event.target.value)"
             cols="22"
             :maxlength="max"
             :minlength="min"

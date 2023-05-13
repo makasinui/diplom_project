@@ -1,4 +1,5 @@
 <template>
+    <ui-button green bold className="add-button">Добавить</ui-button>
     <div class="users-wrapper">
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="users">
@@ -128,7 +129,7 @@ const updateAdmin = async (id, value) => {
 const updateUser = async () => {
     const changedValues = Object.values(editableItem.value)
     const previousValues = Object.values(users.value.find(user => user.id === editableItem.value.id));
-
+    showModal.value = false;
     /* если значения строки и изменённые значение равны, то ничего не делаем */
     if(JSON.stringify(changedValues) === JSON.stringify(previousValues)) {
         return;
@@ -150,7 +151,7 @@ watch([page, perPage], async () => {
     align-items: flex-start;
     justify-content: flex-start;
     overflow-x: auto;
-    
+
     .modal-header {
         text-align: center;
     }

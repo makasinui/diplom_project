@@ -1,4 +1,5 @@
 <template>
+    <ui-button @click="() => {showModal = true; toAdd = true}" green bold className="add-button">Добавить</ui-button>
     <div class="products-wrapper">
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="products">
@@ -13,20 +14,30 @@
                 <ActionsCell @edit="editItem(row)" @delete="deleteItem(row.id)" />
             </template>
         </Table>
-        <Modal :show="showModal" @close="showModal = false" @save="updateProduct">
+        <Modal :show="showModal" @close="() => {
+                    showModal = false; 
+                    toAdd = false;
+                    editableItem = {};
+                    fillRequired = false;
+                }" 
+                @save="changeProduct">
             <template #header>
-                Редактирование товара
+                {{toAdd ? 'Добавление' : 'Редактирование'}} товара
             </template>
             <template #body>
                 <div class="edit-wrapper">
                     <div class="image">
-                        <img :src="image">
+                        <img :src="image" v-if="!toAdd">
+                        <label v-else>
+                            <input type="file">(.jpg, .png, .jpeg)
+                        </label>
                     </div>
                     <div class="content-form">
                         <ui-input 
                             label="Наименование" 
                             type="text"
-                            :rules="{max: 150}" 
+                            :rules="{max: 150}"
+                            @error="errorMessage($event)"
                             required 
                             v-model="editableItem.title"
                         />
@@ -34,6 +45,7 @@
                             label="Описание"
                             textArea
                             type="text"
+                            @error="errorMessage($event)"
                             :rules="{max: 1000}"
                             required 
                             v-model="editableItem.description"
@@ -41,7 +53,8 @@
                         <ui-input 
                             label="Цена" 
                             type="number"
-                            :rules="{max: 10}" 
+                            :rules="{max: 1000}" 
+                            @error="errorMessage($event)"
                             required 
                             v-model="editableItem.price"
                         />
@@ -49,6 +62,7 @@
                             label="VIN" 
                             type="number"
                             :rules="{max: 10}" 
+                            @error="errorMessage($event)"
                             required 
                             v-model="editableItem.vin"
                         />
@@ -57,6 +71,7 @@
                             @change="(val) => editableItem.popular = val" 
                             :value="editableItem.popular" 
                         />
+                        <div class="error" v-if="fillRequired">заполнены не все обязательные поля</div>
                     </div>
                 </div>
             </template>
@@ -71,7 +86,7 @@
                 @updatePage="(ev) => (page = ev)"
                 @updatePerPage="(ev) => perPage = ev"
             />
-        </div>
+    </div>
 </template>
 <script setup>
 import Table from '@/components/admin/Table.vue';
@@ -83,6 +98,7 @@ import ProductsService from '@/services/ProductsService';
 import { onMounted, ref, watch } from 'vue';
 
 import Modal from '@/components/Modal.vue';
+import { useToast } from 'vue-toast-notification';
 const adminService = new AdminService();
 const productsService = new ProductsService();
 
@@ -97,13 +113,20 @@ const loading = ref(false);
 
 const editableItem = ref({});
 const showModal = ref(false);
+const toAdd = ref(false);
+const fillRequired = ref(false);
+const error = ref();
+
+const errorMessage = (err) => {
+    error.value = err;
+};
 
 const fetchProducts = async () => {
     loading.value = true;
     const res = await adminService.getAllProducts(page.value, perPage.value);
     products.value = res.data;
     total.value = res.meta?.last_page;
-    perPage.valeu = res.meta?.per_page;
+    perPage.value = res.meta?.per_page;
     loading.value = false;
 }
 
@@ -144,17 +167,46 @@ const editItem = (row) => {
     showModal.value = true;
 }
 
-const updateProduct = async () => {
+const changeProduct = async () => {
+    const allRequiredFields = 
+        editableItem.value.title &&
+        editableItem.value.description && 
+        editableItem.value.price && 
+        editableItem.value.vin
+
+    
+    if(!allRequiredFields) {
+        console.log(editableItem.value)
+        fillRequired.value = true;
+        return;
+    }
+
+    if(error.value?.length) {
+        useToast().error('Проверьте ошибки')
+        return;
+    }
+
+    if(toAdd.value) {
+        loading.value = true;
+        showModal.value = false;
+        await productsService.create(editableItem.value);
+        await fetchProducts();
+        editableItem.value = {};
+        fillRequired.value = false;
+    }
+    
     const changedValues = Object.values(editableItem.value)
     const previousValues = Object.values(products.value.find(product => product.id === editableItem.value.id));
-
+    showModal.value = false;
     /* если значения строки и изменённые значение равны, то ничего не делаем */
     if(JSON.stringify(changedValues) === JSON.stringify(previousValues)) {
+        editableItem.value = {};
         return;
     }
 
     await productsService.update(editableItem.value);
     await fetchProducts();
+    editableItem.value = {};
 }
 
 const deleteItem = async (id) => {

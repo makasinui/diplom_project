@@ -52,6 +52,10 @@ const component = computed(() => {
                     }
                 }
             }
+            .add-button {
+                margin-left: auto;
+                margin-bottom: 15px;
+            }
         }
     }
     .image-short {
