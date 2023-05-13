@@ -232,6 +232,7 @@ watch([page, perPage], async () => {
     align-items: flex-start;
     justify-content: flex-start;
     overflow-x: auto;
+    margin-bottom: auto;
     .wrapper {
         width: 100%;
         .custom-pagination {
