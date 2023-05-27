@@ -1,9 +1,14 @@
 # Инструкция по разворачиванию приложения
-<ol>
-    <li>``` composer install ```</li>
-    <li>Настройка .env(DB_DATABASE, DB_USERNAME, DB_PASSWORD)</li>
-    <li>```php artisan migrate```</li>
-    <li>```php artisan key:generate```</li>
-    <li>```php artisan storage:link```</li>
-    <li>```php artisan serve --host=khizauto.backend```</li>
-</ol>
+## Database
+```mysql
+CREATE DATABASE auto DEFAULT CHARACTER SET utf8 DEFAULT COLLATE ut8_general_ci;
+```
+## Laravel
+```shell 
+composer install
+Настройка .env(DB_USERNAME, DB_PASSWORD)
+php artisan migrate
+php artisan key:generate
+php artisan storage:link
+php artisan serve --host=khizauto.backend
+```
