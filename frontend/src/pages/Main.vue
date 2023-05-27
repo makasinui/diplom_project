@@ -50,8 +50,6 @@ async function getProducts() {
     isLoading.value = true;
     const res = await productService.getPopular();
     cards.value = res.data;
-    /* todo: delete hardcode */
-    cards.value = [cards.value[0], cards.value[1], cards.value[2]]
     isLoading.value = false;
 }
 
@@ -82,7 +80,7 @@ onMounted(async () => {
 
 .popular-items {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     gap: 8px;
 }
 

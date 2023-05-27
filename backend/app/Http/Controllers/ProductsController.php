@@ -49,7 +49,7 @@ class ProductsController extends Controller
      */
     public function show(number $id)
     {
-        return new ProductsResource(Book::findOrFail($id));
+        return new ProductsResource(Product::findOrFail($id));
     }
 
     /**
@@ -68,5 +68,11 @@ class ProductsController extends Controller
     {
         $product->delete();
         return 1;
+    }
+
+    public function getPopular()
+    {
+        
+        return ProductsResource::collection(Product::where('popular', '=', '1')->get());
     }
 }

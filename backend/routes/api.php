@@ -24,6 +24,7 @@ Route::post('/auth/login', [AuthController::class, 'loginUser']);
 
 Route::get('/user', [AuthController::class, 'getUser']);
 
+Route::get('/products/popular', [ProductsController::class, 'getPopular']);
 Route::resources([
     'products' => ProductsController::class
 ]);
