@@ -35,9 +35,25 @@ export default class ProductsService {
         }
     }
 
-    async create(data) {
+    async create(data, file = '') {
         try {
-            const res = await this.httpService.post(`${this.url}`, data)
+            let res;
+            data.popular = data.popular ?? 0;
+            if (file) {
+                const config = { "content-type": "multipart/form-data" };
+                const formData = new FormData();
+                
+                formData.append('img', file);
+                formData.append('title', data.title);
+                formData.append('description', data.description);
+                formData.append('price', data.price);
+                formData.append('vin', data.vin);
+                formData.append('popular', data.popular)
+
+                res = await this.httpService.post(`${this.url}`, formData, config)
+            } else {
+                res = await this.httpService.post(`${this.url}`, data);
+            }
             this.toast.success('Успешно')
             return res;
         } catch(err) {

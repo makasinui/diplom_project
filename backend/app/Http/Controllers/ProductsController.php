@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Storage;
 
 use App\Models\Product;
 use App\Http\Resources\ProductsResource;
@@ -32,7 +33,7 @@ class ProductsController extends Controller
                 
             );
         }
-        return ProductsResource::collection(Product::paginate($query['per_page']));
+        return ProductsResource::collection(Product::paginate($query['per_page'] ?? 10));
     }
 
     /**
@@ -40,7 +41,10 @@ class ProductsController extends Controller
      */
     public function store(ProductsStoreRequest $request)
     {
-        $created_product = Product::create($request->validated());
+        $name = uniqid() . '_' . str_replace(' ', '_', $request->img->getClientOriginalName());
+        $path = Storage::disk('public')->putFileAs('images', $request->img, $name);
+        unset($request->img);
+        $created_product = Product::create(array_merge($request->validated(), ['img' => $name]));
         return $created_product;
     }
 
@@ -72,7 +76,6 @@ class ProductsController extends Controller
 
     public function getPopular()
     {
-        
         return ProductsResource::collection(Product::where('popular', '=', '1')->get());
     }
 }

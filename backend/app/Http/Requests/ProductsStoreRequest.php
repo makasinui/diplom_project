@@ -26,7 +26,7 @@ class ProductsStoreRequest extends FormRequest
             'description' => 'max:500',
             'price' => 'required',
             'vin' => 'required',
-            'img' => 'max:1000',
+            'img' => 'required',
             'popular' => 'max:1'
         ];
     }

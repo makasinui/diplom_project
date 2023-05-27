@@ -7,7 +7,7 @@
                 <ui-switcher @change="(val) => changePopular(val, row)" :value="value" />
             </template>
             <template #img="{ value }">
-                <img class="image-short" :src="image"/>
+                <img class="image-short" :src="`/backend/storage/images/${value}`"/>
             </template>
             <template #actions="{ row }">
                 <!-- todo: return id in slot -->
@@ -19,6 +19,7 @@
                     toAdd = false;
                     editableItem = {};
                     fillRequired = false;
+                    fileToUpload = '';
                 }" 
                 @save="changeProduct">
             <template #header>
@@ -27,9 +28,10 @@
             <template #body>
                 <div class="edit-wrapper">
                     <div class="image">
-                        <img :src="image" v-if="!toAdd">
+                        <img :src="`/backend/storage/images/${editableItem.img}`" v-if="!toAdd">
                         <label v-else>
-                            <input type="file">(.jpg, .png, .jpeg)
+                            <img v-if="fileToUpload.name"  :src="getImage()" alt="">
+                            <input type="file" @change="uploadFile">
                         </label>
                     </div>
                     <div class="content-form">
@@ -106,8 +108,8 @@ const products = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
-/* TODO: replace image */
-const image = new URL('@/assets/img/Rectangle 9.png', import.meta.url).href;
+
+const fileToUpload = ref('');
 
 const loading = ref(false);
 
@@ -120,6 +122,15 @@ const error = ref();
 const errorMessage = (err) => {
     error.value = err;
 };
+
+const uploadFile = (e) => {
+    fileToUpload.value = e.target.files[0];
+}
+
+const getImage = () => {
+    console.log(fileToUpload.value, URL.createObjectURL(fileToUpload.value))
+    return URL.createObjectURL(fileToUpload.value);
+}
 
 const fetchProducts = async () => {
     loading.value = true;
@@ -189,7 +200,11 @@ const changeProduct = async () => {
     if(toAdd.value) {
         loading.value = true;
         showModal.value = false;
-        await productsService.create(editableItem.value);
+        if(!fileToUpload.value) {
+            useToast().error('Загрузите файл!');
+            return;
+        }
+        await productsService.create(editableItem.value, fileToUpload.value);
         await fetchProducts();
         editableItem.value = {};
         fillRequired.value = false;
