@@ -1,7 +1,7 @@
 # Инструкция по разворачиванию приложения
 ## Database
 ```mysql
-CREATE DATABASE auto DEFAULT CHARACTER SET utf8 DEFAULT COLLATE ut8_general_ci;
+CREATE DATABASE auto DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
 ```
 ## Laravel
 ```shell 
