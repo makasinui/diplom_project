@@ -23,7 +23,7 @@
 import { toRefs } from "vue";
 const props = defineProps({ card: Object });
 const { title, description, price, vin, img } = toRefs(props.card);
-const image = new URL('../assets/img/Rectangle 9.png', import.meta.url).href;
+const image = `/backend/storage/images/${img.value}`;
 
 const addToCart = () => {
   if(localStorage.getItem('cart')) {
