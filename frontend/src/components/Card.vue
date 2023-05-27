@@ -29,6 +29,10 @@ const addToCart = () => {
   if(localStorage.getItem('cart')) {
     const card = JSON.parse(localStorage.getItem('cart'));
     if(card.some(item => item.id === props.card.id)) {
+      const item = card.find(item => item.id === props.card.id);
+      // если повторно добавляем товар то прибавляем count
+      item.count = item.count ? item.count + 1 : 2;
+      localStorage.setItem('cart', JSON.stringify(card));
       return;
     }
     card.push(props.card);
@@ -91,6 +95,12 @@ const addToCart = () => {
     .card__button .button {
       margin: 0 auto;
     }
+  }
+  opacity: 0.95;
+
+  &:hover {
+    transition: 0.3s all;
+    opacity: 1;
   }
 }
 </style>

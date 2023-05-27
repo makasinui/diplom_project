@@ -61,7 +61,7 @@ function onChange(val) {
         return;
     }
 
-    if (requiredAlias.value && val.indexOf("@") === -1) {
+    if (requiredAlias.value && /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(val)) {
         errorMessage.value = "Неправильно указан email";
         emit("error", errorMessage.value);
         return;

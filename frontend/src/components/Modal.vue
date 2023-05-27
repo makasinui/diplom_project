@@ -14,6 +14,7 @@
                 <div class="modal-footer">
                     <ui-button
                         class="modal-save-button"
+                        v-if="showSave"
                         @click="
                             () => {
                                 emit('save');
@@ -37,6 +38,11 @@
 <script setup>
 const props = defineProps({
     show: Boolean,
+    showSave: {
+        type: Boolean,
+        required: false,
+        default: true
+    }
 });
 const emit = defineEmits(["close", "save"]);
 </script>

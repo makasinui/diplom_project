@@ -57,15 +57,23 @@
 
             <ui-button @click="sendOrder" v-else bold className="button-send">Оформить заказ</ui-button>
         </section>
+        <Modal :show="open" :showSave="false" @close="open = false">
+            <template #header>
+                <span class="modal-title">Заказ успешно создан!</span>
+            </template>
+        </Modal>
     </Layout>
 </template>
 
 <script setup>
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toast-notification";
+
 import CartItem from "../components/CartItem.vue";
 import AuthService from "../services/AuthService";
 import OrderService from "../services/OrderService";
+import Modal from "../components/Modal.vue";
+
 const cards = ref([]);
 const total = ref(0);
 
@@ -77,6 +85,8 @@ const passwordConfirmation = ref('');
 const error = ref('');
 const toast = useToast();
 const user = ref(JSON.parse(localStorage.getItem("user") || "{}"));
+const open = ref(false);
+
 const allRequiredFields = computed(() => 
     name.value?.length && 
     email.value?.length && 
@@ -119,6 +129,8 @@ const createOrder = async () => {
 const sendOrder = async () => {
     if(user.value?.name) {
         await createOrder();
+        open.value = true;
+        return;
     }
 
     if(!error.value?.length && allRequiredFields.value) {
@@ -149,9 +161,16 @@ onMounted(getCardsContent);
     .cart-content {
         display: flex;
         flex-wrap: wrap;
-        gap: 15px 0;
+        gap: 25px 0;
+        width: 100%;
         .card {
             margin-right: 15px;
+            padding: 5px;
+            border: 1px solid gray;
+
+            @media screen and (max-width: 420px) {
+                margin: 0;
+            }
         }
 
         @media (max-width: 768px) {
@@ -199,6 +218,9 @@ onMounted(getCardsContent);
             margin: 0 auto;
             margin-top: 15px;
         }
+    }
+    .modal-header {
+        text-align: center;
     }
 }
 </style>
