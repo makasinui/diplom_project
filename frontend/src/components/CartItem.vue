@@ -1,7 +1,7 @@
 <template>
     <div class="card">
       <div class="card-img">
-        <img class="primary-img" :src="image" alt="" />
+        <img class="primary-img" :src="`/backend/storage/images/${img}`" alt="" />
       </div>
       <div class="card-content">
         <span class="card-content__title">
@@ -74,6 +74,7 @@
       align-items: center;
       gap: 8px;
       width: 100%;
+      flex: 0 1 auto;
   
       &__title {
         font-weight: 500;

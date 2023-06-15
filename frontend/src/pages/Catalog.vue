@@ -3,7 +3,7 @@
         <section class="content">
             <Search />
         </section>
-        <section class="cards-wrapper content">
+        <section class="catalog-content content">
             <Loader v-if="loading" />
             <transition-group
                 name="fade"
@@ -77,7 +77,9 @@ watch([page, perPage], (a, b) => {
 </script>
 
 <style lang="scss">
-.catalog-wrapper {
+.catalog-content {
+    display: flex;
+    
     .cards-wrapper {
         display: flex;
         justify-content: space-between;

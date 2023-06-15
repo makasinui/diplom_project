@@ -74,7 +74,7 @@ const emit = defineEmits(["close", "save"]);
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
-    font-family: Helvetica, Arial, sans-serif;
+    position: relative;
 
     @media screen and (max-width: 560px) {
         max-width: 240px;
@@ -83,8 +83,13 @@ const emit = defineEmits(["close", "save"]);
 }
 
 .modal-header {
+    word-break: break-all;
+    position: relative;
+    
     .x-icon {
-        float: right;
+        position: absolute;
+        top: 0;
+        right: 0;
         cursor: pointer;
         font-size: 20px;
         font-weight: bold;

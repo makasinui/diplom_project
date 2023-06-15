@@ -30,7 +30,7 @@
             <Card v-for="card in cards" :key="card.id" :card="card" />
         </section>
         <section class="map content">
-            <img class="map__img" src="../assets/img/Rectangle.png" alt="" />
+            <a target="_blank" href="https://yandex.ru/maps/org/khiz_auto/49391663429/?ll=39.729981%2C47.263746&z=14"><img class="map__img" src="../assets/img/Rectangle.png" alt="" /></a>
         </section>
     </Layout>
 </template>

@@ -20,15 +20,17 @@
                 class="search__input"
                 v-model="textSearch"
             />
-            <ui-button bold class="search__button quest" @click="search"
-                >Поиск</ui-button
-            >
-            <ui-button
-                bold
-                class="search__button query"
-                @click="() => search(true)"
-                >Запрос по VIN</ui-button
-            >
+            <div class="buttons">
+                <ui-button bold class="search__button quest" @click="search"
+                    >Поиск</ui-button
+                >
+                <ui-button
+                    bold
+                    class="search__button query"
+                    @click="() => search(true)"
+                    >Запрос по VIN</ui-button
+                >
+            </div>
         </div>
     </section>
 </template>
@@ -86,9 +88,14 @@ function search(vin = false) {
         gap: 5px;
 
         &__input {
-            max-width: 850px;
+            max-width: 975px;
             width: 100%;
             height: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 8px;
         }
 
         &__button {

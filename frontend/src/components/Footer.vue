@@ -2,15 +2,19 @@
   <footer class="footer white">
     <ul class="footer-section">
     </ul>
-    <ul class="footer-section">
-      <span class="footer-section__title">Товары</span>
-      <li class="footer-section__item">Каталог запчастей</li>
-      <li class="footer-section__item">Запчасти для ТО</li>
-    </ul>
-    <ul class="footer-section">
-      <span class="footer-section__title">Покупателям</span>
-      <li class="footer-section__item">Контакты</li>
-    </ul>
+    <router-link to="/catalog">
+      <ul class="footer-section">
+        <span class="footer-section__title">Товары</span>
+        <li class="footer-section__item">Каталог запчастей</li>
+        <li class="footer-section__item">Запчасти для ТО</li>
+      </ul>
+    </router-link>
+    <router-link to="/contacts">
+      <ul class="footer-section">
+        <span class="footer-section__title">Покупателям</span>
+        <li class="footer-section__item">Контакты</li>
+      </ul>
+    </router-link>
   </footer>
 </template>
 

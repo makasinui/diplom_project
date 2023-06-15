@@ -51,7 +51,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(number $id)
+    public function show($id)
     {
         return new ProductsResource(Product::findOrFail($id));
     }
