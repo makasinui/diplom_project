@@ -62,6 +62,7 @@ const addToCart = () => {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1 0 auto;
 
     &__title {
       font-weight: 500;
@@ -87,6 +88,7 @@ const addToCart = () => {
     }
 
     .card__button {
+      margin-top: auto;
       .button {
         background: #3f64ae;
       }

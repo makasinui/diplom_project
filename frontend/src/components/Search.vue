@@ -7,9 +7,9 @@
                     src="../assets/img/library_books.png"
                     width="25"
                     height="25"
-                    alt="Каталоги"
+                    alt="Каталог"
                 />
-                <span class="catalogs__text">Каталоги</span>
+                <span class="catalogs__text">Каталог</span>
                 <span class="catalogs__line">|</span>
             </router-link>
         </div>

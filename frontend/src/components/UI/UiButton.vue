@@ -47,6 +47,10 @@ defineProps({
         background: #3f64ae;
     }
 
+    &:hover {
+        opacity: 0.8;
+    }
+
     @media (max-width: 768px) {
         font-size: 14px;
         padding: 0 10px;
