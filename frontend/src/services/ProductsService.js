@@ -19,6 +19,16 @@ export default class ProductsService {
         return this.httpService.get(`${this.url}/popular`).then(({ data }) => data);
     }
 
+    async getById(id) {
+        try {
+            const res = await this.httpService.get(`${this.url}/${id}`);
+            return res.data.data;
+        }
+        catch(err) {
+            this.toast.info('Что-то пошло не так');
+        }
+    }
+
     searchProducts(search, page = 1, perPage = 10) {
         return this.httpService
             .get(`${this.url}?${search}&page=${page}&per_page=${perPage}`)

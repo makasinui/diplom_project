@@ -3,7 +3,7 @@
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="users">
             <template #actions="{ row }">
-                <ActionsCell @edit="editItem(row)" @delete="deleteItem(row.id)" />
+                <ActionsCell :disableDelete="!!(row.admin || user.id === row.id)" @edit="editItem(row)" @delete="deleteItem(row.id)" />
             </template>
             <template #admin="{ value, row }">
                 <ui-switcher
@@ -57,9 +57,14 @@
 import Table from "@/components/admin/Table.vue";
 import AdminService from "@/services/AdminService.js";
 import ActionsCell from "@/components/admin/table-layout/ActionsCell.vue";
-import { onMounted, ref, watch } from "vue";
 import UserService from "@/services/UserService";
 import Modal from '@/components/Modal.vue';
+
+import { useStore } from "vuex";
+import { onMounted, ref, watch } from "vue";
+
+const store = useStore();
+const user = store.getters['user'];
 
 const adminService = new AdminService();
 const userService = new UserService();

@@ -3,8 +3,7 @@
         <Loader v-if="loading" />
         <Table :columns="cols" :rows="orders">
             <template #actions>
-                <!-- todo: return id in slot -->
-                <ActionsCell @edit="editItem" @delete="deleteItem" />
+                <ActionsCell hideEdit @edit="editItem" @delete="deleteItem" />
             </template>
             <template #user="{ value }">
                 {{ value.name }}
@@ -15,6 +14,7 @@
                         class="products-cell__item"
                         v-for="item in value"
                         :key="item.id"
+                        @click="openModal(item.id)"
                     >
                         {{ item.id }}
                     </span>
@@ -24,6 +24,45 @@
                 {{ new Date(value).toLocaleDateString() }}
             </template>
         </Table>
+        <Modal
+            :show="showModal"
+            :showSave="false"
+            @close="showModal = !showModal"
+        >
+            <template #header>
+                <h3>{{ currentProduct.title }}</h3>
+            </template>
+            <template #body>
+                <div class="order-item">
+                    <section class="image">
+                        <img
+                            :src="`/backend/storage/images/${currentProduct.img}`"
+                            alt=""
+                        />
+                    </section>
+                    <section class="content-wrapper">
+                        <div class="content-item">
+                            <span class="title">Наименование</span>
+                            <span class="text">{{ currentProduct.title }}</span>
+                        </div>
+                        <div class="content-item">
+                            <span class="title">Описание</span>
+                            <span class="text">{{
+                                currentProduct.description
+                            }}</span>
+                        </div>
+                        <div class="content-item">
+                            <span class="title">Цена</span>
+                            <span class="text">{{ currentProduct.price }}</span>
+                        </div>
+                        <div class="content-item">
+                            <span class="title">VIN</span>
+                            <span class="text">{{ currentProduct.vin }}</span>
+                        </div>
+                    </section>
+                </div>
+            </template>
+        </Modal>
     </div>
     <div class="pagination-table__wrapper">
         <ui-pagination
@@ -39,14 +78,21 @@
 import Table from "@/components/admin/Table.vue";
 import AdminService from "@/services/AdminService.js";
 import ActionsCell from "@/components/admin/table-layout/ActionsCell.vue";
+import ProductsService from "@/services/ProductsService";
+import Modal from "@/components/Modal.vue";
+import Card from "@/components/Card.vue";
+
 import { onMounted, ref, watch } from "vue";
 
 const adminService = new AdminService();
+const productsService = new ProductsService();
 const orders = ref([]);
 const page = ref(1);
 const total = ref(1);
 const perPage = ref(10);
 const loading = ref(false);
+const currentProduct = ref();
+const showModal = ref(false);
 
 const fetchOrders = async () => {
     loading.value = true;
@@ -57,7 +103,10 @@ const fetchOrders = async () => {
     loading.value = false;
 };
 
-const openProducts = async (id) => {};
+const openModal = async (id) => {
+    currentProduct.value = await productsService.getById(id);
+    showModal.value = true;
+};
 
 onMounted(async () => {
     await fetchOrders();
@@ -122,6 +171,40 @@ watch([page, perPage], async () => {
             @media screen and (max-width: 1000px) {
                 margin-left: 0;
             }
+        }
+    }
+
+    .order-item {
+        display: flex;
+        gap: 20px;
+        
+        .image img {
+            max-width: 270px;
+            width: 100%;
+        }
+
+        .content {
+            &-wrapper {
+                padding: 5px;
+                border: 1px solid gray;
+            }
+           &-item {
+            display: flex;
+            flex-direction: column;
+
+            .title {
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .text {
+                padding-top: 5px;
+            }
+           } 
+        }
+
+        @media screen and (max-width: 560px) {
+            flex-direction: column;
         }
     }
 }

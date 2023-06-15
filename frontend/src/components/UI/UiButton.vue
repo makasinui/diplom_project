@@ -1,12 +1,14 @@
 <template>
     <button
         @click="emit('click')"
+        :disabled="disabled"
         :class="[
             'button',
             className,
             bold ? 'bold' : '',
             green && 'green',
             blue && 'blue',
+            disabled && 'disabled'
         ]"
     >
         <slot></slot>
@@ -20,6 +22,10 @@ defineProps({
     bold: Boolean,
     green: Boolean,
     blue: Boolean,
+    disabled: {
+        type: Boolean,
+        required: false
+    }
 });
 </script>
 
