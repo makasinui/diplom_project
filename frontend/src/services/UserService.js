@@ -9,11 +9,11 @@ export default class UserService {
     httpService = new HttpService();
     toast = useToast();
 
-    getUser() {
-        return this.httpService.get(`${this.url}`).then(({data}) => {
-            store.commit('setUser', data)
-            return data
-        })
+    async getUser() {
+        const res = await this.httpService.get(`${this.url}`);
+        store.commit('setUser', res.data);
+
+        return res.data;
     }
 
     async update(data) {

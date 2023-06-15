@@ -18,7 +18,7 @@ const routes = [
     { path: "/about-us", component: AboutUs },
     { path: "/clients", component: Clients },
     { path: "/contacts", component: Contacts },
-    { path: "/admin", component: MainAdmin, meta: {forAdmin: true} },
+    { path: "/admin", component: MainAdmin, meta: { forAdmin: true } },
     { path: "/cart", component: Cart },
     { path: "/login", component: Login },
     { path: "/register", component: Register },
@@ -32,10 +32,8 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from, next) => {
-    let user = JSON.parse(localStorage.getItem('user') || '{}');
-    window.addEventListener('user', () => {
-        user = store.getters.user;
-    })
+    const user = store.getters['user'];
+
     if (to?.meta?.forAdmin) {
 
         if (user.admin) {

@@ -26,7 +26,7 @@ export default class AuthService {
             await this.httpService.post(`${this.url}/auth/login`, { email, password })
             .then(async (res) => await this.setToken(res.data.token))
             this.toast.success('Успешно!', {duration: 5000})
-            return;
+            return true;
         } catch(err) {
             if(err?.response && err.response.status === 401) {
                 this.toast.error('Неправильный логин или пароль', { duration: 5000 })
@@ -55,7 +55,13 @@ export default class AuthService {
     }
 
     async logout() {
-        await this.removeToken();
-        this.toast.success('Успешно', { duration: 5000 });
+        try {
+            await this.httpService.get(`${this.url}/auth/logout`)
+            await this.removeToken();
+            this.toast.success('Успешно', { duration: 5000 });
+            return;
+        } catch(err) {
+            this.toast.error('Ошибка!', { duration: 5000 })
+        }
     }
 }

@@ -2,26 +2,27 @@ import { createStore } from "vuex";
 import UserService from "../services/UserService";
 
 const store = createStore({
-    state: {},
-    mutations:{
+    state: {
+        user: {}
+    },
+    mutations: {
         setUser(state, user) {
+            state.user = user;
             localStorage.setItem('user', JSON.stringify(user));
-            window.dispatchEvent(new CustomEvent('user'), {
-                detail: user
-            });
         } 
     },
-    getters:{
-        user() {
-            return JSON.parse(localStorage.getItem('user') || '{}')
+    getters: {
+        user(state) {
+            return state.user;
         }
     },
     actions: {
-        async getUser({ commit }) {
-            const userService = new UserService();
-            const user = await userService.getUser();
-            commit('setUser', user);
-            return user;
+        getUser({ commit }) {
+            if(localStorage.getItem('user')) {
+                commit('setUser', JSON.parse(localStorage.getItem('user')));
+                return;
+            }
+
         }
     }
 });
