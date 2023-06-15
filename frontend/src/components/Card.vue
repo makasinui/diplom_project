@@ -65,6 +65,7 @@ const addToCart = () => {
 
     &__title {
       font-weight: 500;
+      word-break: break-all;
     }
 
     &__main {
@@ -73,6 +74,7 @@ const addToCart = () => {
     }
 
     &__description {
+      word-break: break-all;
     }
 
     &__main {

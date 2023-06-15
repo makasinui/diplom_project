@@ -72,10 +72,10 @@ async function register() {
     /* проверяем на ошибки */
     if(!error.value?.length && allRequiredFilled.value) {
          const res = await authService.register({
-              email: email.value,
-              password: password.value,
-              password_confirmation: passwordConfirmation.value,
-              name: name.value,
+              email: email.value.trim(),
+              password: password.value.trim(),
+              password_confirmation: passwordConfirmation.value.trim(),
+              name: name.value.trim()
           });
           if(res) {
             router.push('/');

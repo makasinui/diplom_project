@@ -1,43 +1,39 @@
 <template>
     <header class="header">
-        <div class="city">
-            <img class="small-icon" src="../assets/img/room.png" />
-            <span>г. Ростов-на-Дону</span>
+        <div class="container header-wrapper">
+            <ul class="main-menu">
+                <li class="menu__item">
+                    <router-link to="/">Главная</router-link>
+                </li>
+                <li class="menu__item">
+                    <router-link to="/about-us">О нас</router-link>
+                </li>
+                <li class="menu__item">
+                    <router-link to="/catalog">Каталог</router-link>
+                </li>
+                <li class="menu__item">
+                    <router-link to="/contacts">Контакты</router-link>
+                </li>
+            </ul>
+            <ul class="authorizathion">
+                <li><router-link to="/cart">Корзина</router-link></li>
+                <div class="authentificated-no" v-if="!user?.name">
+                    <li><router-link to="/login">Авторизация</router-link></li>
+                    <li class="ml"><router-link to="/register">Регистрация</router-link></li>
+                </div>
+                <div class="authentificated" v-if="user?.name">
+                    <li>
+                        <a href="#" @click.prevent="logout">Выйти</a>
+                    </li>
+                    <li v-if="user?.admin">
+                        <router-link to="/admin"> Админ панель </router-link>
+                    </li>
+                </div>
+            </ul>
         </div>
-        <ul class="main-menu">
-            <li class="menu__item">
-                <router-link to="/">Главная</router-link>
-            </li>
-            <li class="menu__item">
-                <router-link to="/about-us">О нас</router-link>
-            </li>
-            <li class="menu__item">
-                <router-link to="/catalog">Каталог</router-link>
-            </li>
-            <li class="menu__item">
-                <router-link to="/contacts">Контакты</router-link>
-            </li>
-        </ul>
-        <ul class="authorizathion">
-            <li><router-link to="/cart">Корзина</router-link></li>
-            <div class="authentificated-no" v-if="!user?.name">
-                <li><router-link to="/login">Авторизация</router-link></li>
-                <li class="ml"><router-link to="/register">Регистрация</router-link></li>
-            </div>
-            <div class="authentificated" v-if="user?.name">
-                <li>
-                    <a href="#" @click.prevent="logout">Выйти</a>
-                </li>
-                <li v-if="user?.admin">
-                    <router-link to="/admin"> Админ панель </router-link>
-                </li>
-            </div>
-        </ul>
     </header>
     <header class="header header-mobile">
         <div class="city">
-            <img class="small-icon" src="../assets/img/room.png" />
-            <span>г. Ростов-на-Дону</span>
         </div>
         <div class="main-menu">
             <div class="line-wrapper" @click="openMobileMenu = !openMobileMenu">
@@ -82,18 +78,16 @@
     </header>
 </template>
 <script setup>
-import store from "../store";
-import { ref, onMounted, watch } from "vue";
+
+import { ref, onMounted, watch, computed } from "vue";
 import AuthService from "../services/AuthService";
-const user = ref(store.getters.user);
+import { useStore } from "vuex";
+
+const store = useStore();
+const user = computed(() => store.getters.user);
 const openMobileMenu = ref(false);
 const authService = new AuthService();
 const logout = () => authService.logout();
-onMounted(() => {
-    window.addEventListener("user", () => {
-        user.value = JSON.parse(localStorage.getItem("user"));
-    });
-});
 
 watch(openMobileMenu, (val) => {
     if(val) {
@@ -112,6 +106,10 @@ watch(openMobileMenu, (val) => {
     background: rgba(0, 0, 0, 0.7);
     height: 50px;
     color: white;
+
+    &-wrapper {
+        display: flex;
+    }
 
     .authentificated {
         display: flex;
@@ -136,9 +134,7 @@ watch(openMobileMenu, (val) => {
     .main-menu {
         display: flex;
         gap: 25px;
-        margin-left: 10px;
         width: 100%;
-        max-width: 500px;
         @media (max-width: 1000px) {
             justify-content: flex-end;
             max-width: none;

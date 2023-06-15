@@ -45,8 +45,8 @@ const allRequiredFilled = computed(() => email.value?.length && password.value?.
 async function login() {
     if(allRequiredFilled.value && !error.value?.length) {
         const res = await authService.login({
-            email: email.value, 
-            password: password.value
+            email: email.value.trim(),
+            password: password.value.trim()
         });
         if(res) {
             router.push('/')

@@ -135,10 +135,10 @@ const sendOrder = async () => {
 
     if(!error.value?.length && allRequiredFields.value) {
         const res = await authService.register({
-            email: email.value,
-            password: password.value,
-            password_confirmation: passwordConfirmation.value,
-            name: name.value,
+            email: email.value.trim(),
+            password: password.value.trim(),
+            password_confirmation: passwordConfirmation.value.trim(),
+            name: name.value.trim()
         }); 
         
         res && await createOrder();

@@ -64,6 +64,8 @@ const columnsFields = computed(() =>
     td {
         border: 1px solid #333;
         vertical-align: middle;
+        word-break: break-all;
+        white-space: break-spaces;
     }
 
     thead,

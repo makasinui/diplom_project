@@ -39,9 +39,11 @@ import router from "../router/index.js";
 
 const textSearch = ref();
 function search(vin = false) {
-    router.push({
-        path: `/catalog/${textSearch.value}${vin ? "&vin" : ""}`,
-    });
+    if(textSearch.value) {
+        router.push({
+            path: `/catalog/${textSearch.value.trim()}${vin ? "&vin" : ""}`,
+        });
+    }
 }
 </script>
 
