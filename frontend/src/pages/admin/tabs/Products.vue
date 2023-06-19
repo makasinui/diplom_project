@@ -208,6 +208,9 @@ const changeProduct = async () => {
         await fetchProducts();
         editableItem.value = {};
         fillRequired.value = false;
+        fileToUpload.value = '';
+        toAdd.value = false;
+        return;
     }
     
     const changedValues = Object.values(editableItem.value)

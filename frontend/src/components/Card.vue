@@ -1,7 +1,7 @@
 <template>
   <div class="card">
     <div class="card-img">
-      <img class="primary-img" :src="image" alt="" />
+      <img class="primary-img catalog" :src="image" alt="" />
     </div>
     <div class="card-content">
       <span class="card-content__title">
@@ -90,6 +90,10 @@ onMounted(() => {
     .primary-img {
       max-width: 270px;
       width: 100%;
+    }
+    &.catalog {
+      height: 300px;
+      object-fit: contain;
     }
   }
 
