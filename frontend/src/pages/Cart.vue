@@ -6,7 +6,7 @@
                 <h3 v-if="!cards?.length">Пусто</h3>
                 <transition-group name="fade" tag="div" class="cart-content">
                     <cart-item
-                        @delete-cart="getCardsContent"
+                        @change="getCardsContent"
                         v-for="item in cards"
                         :card="item"
                         :key="item.id"
@@ -111,12 +111,18 @@ const getCardsContent = () => {
     }
 
     // общая сумма
-    total.value = cards.value.reduce((p, c) => +p + c.price, "");
+    total.value = cards.value.reduce((p, c) => +p + c.price * c.count, "");
 };
 
 const createOrder = async () => {
-    const id = cards.value.map(card => card.id);
-    const res = await orderService.makeOrder(id);
+    const idx = [];
+    for(let i = 0; i < cards.value.length; i++) {
+        for(let j = 0; j < cards.value[i].count; j++) {
+            idx.push(cards.value[i].id);
+        }
+    }
+    
+    const res = await orderService.makeOrder(idx);
     if(res.status === 201) {
         toast.success('Заказ успешно создан!');
         localStorage.removeItem('cart');
@@ -206,7 +212,7 @@ onMounted(getCardsContent);
     .fade-leave-active {
         transition: opacity 0.5s;
     }
-    .fade-enter, .fade-leave-to /* .fade-leave-active до версии 2.1.8 */ {
+    .fade-enter, .fade-leave-to {
         opacity: 0;
     }
 

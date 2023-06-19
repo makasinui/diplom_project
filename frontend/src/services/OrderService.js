@@ -4,9 +4,9 @@ export default class OrderService {
     url = "/backend/api/order";
     httpService = new HttpService();
 
-    getAll() {
+    getAll(page = 1, perPage = 10) {
         try {
-            return this.httpService.get(this.url).then(({data}) => data);
+            return this.httpService.get(`${this.url}?page=${page}&per_page=${perPage}`).then(({data}) => data);
         } catch(err) {
             return err;
         }

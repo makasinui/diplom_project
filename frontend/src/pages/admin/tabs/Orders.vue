@@ -96,7 +96,7 @@ const showModal = ref(false);
 
 const fetchOrders = async () => {
     loading.value = true;
-    const res = await adminService.getAllOrders();
+    const res = await adminService.getAllOrders(page.value, perPage.value);
     orders.value = res?.data;
     total.value = res?.last_page;
     perPage.value = res?.per_page;
