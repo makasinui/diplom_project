@@ -8,9 +8,7 @@
           {{ title }}
         </span>
         <div class="card-content__count">
-          <ui-button green className="minus btn" @click="minusCount">-</ui-button>
-          <input type="number" class="quantity" @change="(e) => e.target.value < 0 ? countItem = 0 : countItem = e.target.value" v-model="countItem">
-          <ui-button green className="plus btn" @click="plusCount">+</ui-button>
+          <ui-count :count="countItem" />
         </div>
         <div class="card-content__main">
           <span class="card-content__price"> {{ price * countItem }}р </span>
@@ -42,7 +40,7 @@
     if(localStorage.getItem('cart')) {
       let card = JSON.parse(localStorage.getItem('cart'));
       card = card.filter(cart => cart.id !== props.card.id)
-      console.log(card, props.card.id)
+      
       localStorage.setItem('cart', JSON.stringify(card));
       emit('deleteCart')
       return;

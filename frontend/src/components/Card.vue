@@ -10,20 +10,26 @@
       <div class="card-content__main">
         <span class="card-content__description">{{ description }}</span>
         <span class="card-content__price"> {{ price }}р </span>
+        
       </div>
       <span class="card-content__vin"> vin: {{ vin }} </span>
       <div class="card__button">
-        <ui-button className="button" @click="addToCart">Купить</ui-button>
+        <ui-button v-if="!count" className="button" @click="addToCart">Купить</ui-button>
+        <div class="card__count" v-else>
+          <ui-count :count="count" allow-delete @change="(c) => changeCount(c)"/>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { toRefs } from "vue";
+import { toRefs, ref, onMounted } from "vue";
 const props = defineProps({ card: Object });
 const { title, description, price, vin, img } = toRefs(props.card);
+
 const image = `/backend/storage/images/${img.value}`;
+const count = ref(0);
 
 const addToCart = () => {
   if(localStorage.getItem('cart')) {
@@ -32,16 +38,45 @@ const addToCart = () => {
       const item = card.find(item => item.id === props.card.id);
       // если повторно добавляем товар то прибавляем count
       item.count = item.count ? item.count + 1 : 2;
+      count.value = item.count;
       localStorage.setItem('cart', JSON.stringify(card));
       return;
     }
-    card.push(props.card);
+    card.push({...props.card, count: 1});
+    count.value = 1;
     localStorage.setItem('cart', JSON.stringify(card));
     return;
   }
 
-  localStorage.setItem('cart', JSON.stringify([props.card]));
+  count.value = 1;
+  localStorage.setItem('cart', JSON.stringify([{...props.card, count: 1}]));
 }
+
+const changeCount = (item) => {
+  let cartParsed = JSON.parse(localStorage.getItem('cart'));
+  const card = cartParsed.find(item => item.id === props.card.id);
+
+  if(item === 0) {
+    cartParsed = cartParsed.filter(cartItem => cartItem.id !== card.id);
+    count.value = 0;
+  } else {
+    card.count = item;
+  }
+
+  localStorage.setItem('cart', JSON.stringify(cartParsed));
+}
+
+/* check item count */
+onMounted(() => {
+  if(localStorage.getItem('cart')) {
+    const allCart = JSON.parse(localStorage.getItem('cart'))
+    const card = allCart.find(item => item.id === props.card.id);
+    
+    if(card) {
+      count.value = card.count;
+    }
+  }
+})
 </script>
 
 <style lang="scss">
@@ -91,6 +126,10 @@ const addToCart = () => {
       margin-top: auto;
       .button {
         background: #3f64ae;
+      }
+      .card__count {
+        display: flex;
+        justify-content: center;
       }
     }
   }

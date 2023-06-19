@@ -90,6 +90,7 @@ watch([page, perPage], (a, b) => {
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            width: 100%;
         }
     }
     .fade-enter-active,
