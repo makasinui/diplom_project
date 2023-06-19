@@ -3,7 +3,7 @@
         <div class="card-img">
             <img
                 class="primary-img"
-                :src="`/backend/storage/images/${img}`"
+                :src="`https://api.khizauto.ru/storage/images/${img}`"
                 alt=""
             />
         </div>

@@ -14,15 +14,5 @@ export default ({ mode }) => {
         '@': path.resolve(__dirname, './src')
       }
     },
-    server: {
-      proxy: {
-        '/backend': {
-          target: process.env.VITE_BACKEND_URL,
-          changeOrigin: !isProduction,
-          secure: isProduction,
-          rewrite: (path) => path.replace(/^\/backend/, ''),
-        }
-      }
-    }
   })
 }

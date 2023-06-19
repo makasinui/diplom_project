@@ -3,7 +3,7 @@ import OrderService from './OrderService';
 import ProductsService from './ProductsService';
 
 export default class AdminService {
-    url = '/backend/api';
+    url = 'https://api.khizauto.ru/api';
     httpService = new HttpService();
     productsService = new ProductsService();
     orderService = new OrderService();

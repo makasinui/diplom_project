@@ -1,7 +1,7 @@
 import HttpService from "./HttpService";
 
 export default class OrderService {
-    url = "/backend/api/order";
+    url = "https://api.khizauto.ru/api/order";
     httpService = new HttpService();
 
     getAll(page = 1, perPage = 10) {

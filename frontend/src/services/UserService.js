@@ -5,7 +5,7 @@ import { useToast } from "vue-toast-notification"
 import { AxiosService } from "./AxiosService";
 
 export default class UserService {
-    url = '/backend/api/user';
+    url = 'https://api.khizauto.ru/api/user';
     httpService = new HttpService();
     toast = useToast();
 

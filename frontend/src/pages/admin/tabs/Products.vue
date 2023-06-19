@@ -7,7 +7,7 @@
                 <ui-switcher @change="(val) => changePopular(val, row)" :value="value" />
             </template>
             <template #img="{ value }">
-                <img class="image-short" :src="`/backend/storage/images/${value}`"/>
+                <img class="image-short" :src="`https://api.khizauto.ru/storage/images/${value}`"/>
             </template>
             <template #actions="{ row }">
                 <!-- todo: return id in slot -->
@@ -28,7 +28,7 @@
             <template #body>
                 <div class="edit-wrapper">
                     <div class="image">
-                        <img :src="`/backend/storage/images/${editableItem.img}`" v-if="!toAdd">
+                        <img :src="`https://api.khizauto.ru/storage/images/${editableItem.img}`" v-if="!toAdd">
                         <label v-else>
                             <img v-if="fileToUpload.name"  :src="getImage()" alt="">
                             <input type="file" @change="uploadFile">

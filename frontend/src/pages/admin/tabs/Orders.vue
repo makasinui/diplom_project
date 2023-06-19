@@ -36,7 +36,7 @@
                 <div class="order-item">
                     <section class="image">
                         <img
-                            :src="`/backend/storage/images/${currentProduct.img}`"
+                            :src="`https://api.khizauto.ru/storage/images/${currentProduct.img}`"
                             alt=""
                         />
                     </section>
