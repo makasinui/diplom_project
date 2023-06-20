@@ -2,7 +2,7 @@ import { useToast } from "vue-toast-notification";
 import HttpService from "./HttpService";
 
 export default class ProductsService {
-    url = "/backend/api/products";
+    url = "https://api.khizauto.ru/api/products";
     httpService = new HttpService();
     toast = useToast()
 

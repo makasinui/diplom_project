@@ -3,7 +3,7 @@
         <div class="card-img">
             <img
                 class="primary-img"
-                :src="`/backend/storage/images/${img}`"
+                :src="`https://api.khizauto.ru/storage/images/${img}`"
                 alt=""
             />
         </div>
@@ -126,6 +126,10 @@ const changeCount = (item) => {
             margin-right: 5px;
             .button {
                 background: #3f64ae;
+            }
+
+            @media screen and (max-width: 476px) {
+                margin: 0 auto !important;
             }
         }
     }

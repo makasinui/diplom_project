@@ -28,7 +28,7 @@ import { toRefs, ref, onMounted } from "vue";
 const props = defineProps({ card: Object });
 const { title, description, price, vin, img } = toRefs(props.card);
 
-const image = `/backend/storage/images/${img.value}`;
+const image = `https://api.khizauto.ru/storage/images/${img.value}`;
 const count = ref(0);
 
 const addToCart = () => {
