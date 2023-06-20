@@ -127,6 +127,10 @@ const changeCount = (item) => {
             .button {
                 background: #3f64ae;
             }
+
+            @media screen and (max-width: 476px) {
+                margin: 0 auto !important;
+            }
         }
     }
 
