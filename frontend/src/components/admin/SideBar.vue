@@ -32,6 +32,8 @@ const emit = defineEmits(['changeTab'])
     @media screen and (max-width: 1000px) {
         margin-bottom: 20px;
         flex: 0 0 100px;
+        height: auto;
+        max-height: 130px;
 
         .menu {
             &-item {
